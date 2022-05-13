@@ -13,10 +13,10 @@ pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=7200 #in seconds
 
 
-clear
+# clear
 printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\npktwallet must be running in background for pktctl to work\nrun pktwallet first to make wallet up to date\n\n\n"
 read -p "Press enter to continue, ctrl-c to quit" entr
-clear
+# clear
 
 loadlog() {
     PS3="Select: "
@@ -25,12 +25,13 @@ loadlog() {
         case $yn in
             Yes ) break;;
             No ) promptuser; return; break;;
-            Delete ) rm -rf fold.log; echo "Log deleted"; promptuser; return; break;;
+            Delete ) rm -rf fold.log; echo "Log deleted"; sleep 1; promptuser; return; break;;
+            * ) echo "try again";;
         esac
     done
 
     mapfile -t log < fold.log
-    clear
+    # clear
     printf "\n\nLog file loaded, as follows:\n\n"
     echo "path:${log[0]}"
     pktctl="${log[0]}"
@@ -42,7 +43,7 @@ loadlog() {
 }
 
 promptuser() {
-    clear
+    # clear
     read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
     read -p "Wallet address: " addr
     read -p "Wallet passphrase: " pass
@@ -54,7 +55,7 @@ promptuser() {
         case $yn in
             yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
             no ) break;;
-            * ) echo "type yes or no"; break;;
+            * ) echo "type yes or no";;
         esac
 }
 
@@ -66,10 +67,10 @@ promptuser() {
 
 log=fold.log
 if [ -f "$log" ]; then loadlog; else promptuser; fi
-clear
+# clear
 printf "\n\n"
 read -p "press enter to fold or press ctrl-c to exit" entr
-clear
+# clear
 
 $pktctl  --wallet walletpassphrase "$pass" $locktime
 unset pass
