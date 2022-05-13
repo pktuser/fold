@@ -71,14 +71,14 @@ do
      #eval curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' > utx
      utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
      #utx=`curl -s https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ','`
-     echo $pullURL
-     echo $addr
-     echo "utx value: $utx"
-     read -p "press enter to continue" entr
+     #echo $pullURL
+     #echo $addr
+     #echo "utx value: $utx"
+     #read -p "press enter to continue" entr
 
     if [ $utx -gt 1200 ]
         then
-            #$pktctl --wallet sendfrom $addr 0 [\"$addr\"]
+            $pktctl --wallet sendfrom $addr 0 [\"$addr\"]
             x=$(( $x + 1 ))
             echo "Folded $x times"
             sleep 10
