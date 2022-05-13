@@ -5,13 +5,12 @@ pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=7200 #in seconds
 
 clear
-printf "\n\n\nYOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND"
-printf "run pktwallet first to make wallet up to date\n\n\n"
+printf "\n\n\nYOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND\nrun pktwallet first to make wallet up to date\n\n\n"
 read -p "press enter to continue, ctrl-c to quit" entr
 clear
 
 loadlog() {
-    PS3="Select 1 - yes, 2 - no, 3 - delete log: "
+    PS3="Select: "
     echo "Load saved setting from file?"
         select yn in "Yes" "No" "Delete"; do
         case $yn in
