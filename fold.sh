@@ -42,19 +42,15 @@ promptuser() {
     echo "Please note this is very insecure and puts you at risk of theft if anyone accesses this file"
     printf "\n"
     read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
-#        select yn in "yes" "no"; do
         case $yn in
             yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
             no ) break;;
             * ) echo "type yes or no";;
         esac
-#    done
 }
 
 log=fold.log
 if [ -f "$log" ]; then loadlog; else promptuser; fi
-#if [ -z "$v"   ]; then verbmode="verbose"; else verbmode="silent"; fi
-
 clear
 printf "\n\n"
 read -p "press enter to fold or press ctrl-c to exit" entr
@@ -67,7 +63,6 @@ sleep 1
 x=0
 while true
 do
-     # curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' > utx
      utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
      echo "Unconsolidated transactions: $utx"
     if [ $utx -gt 1200 ]
