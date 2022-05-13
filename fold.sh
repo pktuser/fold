@@ -37,7 +37,8 @@ promptuser() {
 }
 
 log=/fold.log
-if [ -f $log ]; then loadlog(); else promptuser(); fi
+if [ -f "$log" ]; then loadlog(); else promptuser(); fi
+#if [ -z "$v"   ]; then verbmode="verbose"; else verbmode="silent"; fi
 
 clear
 printf "\n\n"
