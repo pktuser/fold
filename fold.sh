@@ -17,7 +17,7 @@ loadlog() {
         case $yn in
             Yes ) break;;
             No ) promptuser; break;;
-            Delete ) rm -rf fold.log; break;;
+            Delete ) rm -rf fold.log; promptuser; break;;
         esac
     done
 
