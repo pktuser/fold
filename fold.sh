@@ -10,7 +10,7 @@ read -p "press enter to continue, ctrl-c to quit" entr
 clear
 
 loadlog() {
-    PS3="Select 1 or 2: "
+    PS3="Select 1 - yes or 2 - no: "
     echo "Load saved setting from file?"
         select yn in "Yes" "No"; do
         case $yn in
@@ -36,13 +36,14 @@ promptuser() {
     echo "Would you like to save these settings and your password in a local unencrypted file?"
     echo "Please note this is very insecure and puts you at risk of theft if anyone accesses this file"
 
-    echo "Yes to save (insecure), No to continue without saving"
-        select yn in "Yes, save - insecure" "No, do not save - secure"; do
+    read -p " type \"yes\" to save (insecure), type \"no\" to continue without saving" yn
+#        select yn in "yes" "no"; do
         case $yn in
-            Yes, save - insecure ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
-            No, do not save - secure ) break;;
+            yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
+            no ) break;;
+            * ) echo "type yes or no";;
         esac
-    done
+#    done
 }
 
 log=fold.log
