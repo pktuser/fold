@@ -56,8 +56,8 @@ promptuser() {
             printf "\n"
             read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
         case $yn in
-            yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
-            no ) break;;
+            yes ) printf "$pktctl\n$addr\n$pass" > fold.log; echo "log saved"; sleep 1; break;;
+            no ) echo "changes not saved"; sleep 1; break;;
 #            * ) echo "type yes or no"; sleep 1; break;;
         esac
         done
@@ -66,7 +66,8 @@ promptuser() {
 
 # testWallet() {
     #in progress for future release
-    
+    #test if pktwallet is running
+    #test if wallet is updated to latest block on chain
 # }
 
 log=fold.log
