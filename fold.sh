@@ -1,12 +1,21 @@
 #!/bin/bash
 #https://docs.pkt.cash/en/latest/pktd/pktwallet/
 #unset HISTFILE
+
+# a e s t h e t i c s 
+RED='\033[31m'
+GREEN='\033[32m'
+NF='\033[0m' # No Format
+UNDERLINE='\033[4m'
+GREY='\033[90m'
+
 pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=7200 #in seconds
 
+
 clear
-printf "\n\n\nYOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND\nrun pktwallet first to make wallet up to date\n\n\n"
-read -p "press enter to continue, ctrl-c to quit" entr
+printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\npktwallet must be running in background for pktctl to work\nrun pktwallet first to make wallet up to date\n\n\n"
+read -p "Press enter to continue, ctrl-c to quit" entr
 clear
 
 loadlog() {
@@ -39,14 +48,20 @@ promptuser() {
     read -p "Wallet passphrase: " pass
     printf "\n\n"
     echo "Would you like to save these settings and your password in a local unencrypted file?"
-    echo "Please note this is very insecure and puts you at risk of theft if anyone accesses this file"
+    echo "Please note this is ${RED}very insecure${NF} and puts you at ${RED}risk of theft${NF} if anyone accesses this file"
     printf "\n"
     read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
         case $yn in
             yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
             no ) break;;
-            * ) echo "type yes or no";;
+            * ) echo "type yes or no"; break;;
         esac
+}
+
+
+testWallet() {
+    #in progress for future release
+    
 }
 
 log=fold.log
@@ -55,11 +70,13 @@ clear
 printf "\n\n"
 read -p "press enter to fold or press ctrl-c to exit" entr
 clear
+
 $pktctl  --wallet walletpassphrase "$pass" $locktime
 unset pass
 printf "\n\n\n"
 echo "Wallet unlocked"
 sleep 1
+
 x=0
 while true
 do
@@ -80,4 +97,4 @@ done
 echo "Folding complete, locking wallet . . ."
 $pktctl --wallet walletlock
 echo "Wallet Locked"
-echo "Transactions addresses saved to transactions.log"
+echo "Transactions id's saved to transactions.log"
