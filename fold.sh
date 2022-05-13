@@ -16,8 +16,8 @@ loadlog() {
         select yn in "Yes" "No" "Delete"; do
         case $yn in
             Yes ) break;;
-            No ) promptuser; break;;
-            Delete ) rm -rf fold.log; promptuser; break;;
+            No ) promptuser; return; break;;
+            Delete ) rm -rf fold.log; promptuser; return; break;;
         esac
     done
 
