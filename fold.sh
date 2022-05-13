@@ -59,10 +59,10 @@ promptuser() {
 }
 
 
-testWallet() {
+# testWallet() {
     #in progress for future release
     
-}
+# }
 
 log=fold.log
 if [ -f "$log" ]; then loadlog; else promptuser; fi
