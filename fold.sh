@@ -58,7 +58,7 @@ promptuser() {
         case $yn in
             yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
             no ) break;;
-            * ) echo "type yes or no"; sleep 1; break;;
+#            * ) echo "type yes or no"; sleep 1; break;;
         esac
         done
 }
