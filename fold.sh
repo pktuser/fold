@@ -70,6 +70,8 @@ while true
 do
      # curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' 
      utx=`curl -s $pullurl$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+     echo $pullurl
+     echo $addr
      echo "utx value: $utx"
      read -p "press enter to continue" entr
 
