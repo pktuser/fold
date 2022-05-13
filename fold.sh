@@ -59,18 +59,20 @@ if [ -f "$log" ]; then loadlog; else promptuser; fi
 clear
 printf "\n\n"
 read -p "press enter to fold or press ctrl-c to exit" entr
-
+clear
 $pktctl  --wallet walletpassphrase "$pass" $locktime
 unset pass
-
+printf "\n\n\n"
 echo "Wallet unlocked"
-
+sleep 1
 x=0
 while true
 do
      # curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' 
-     utx=`curl $pullurl$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
-    
+     utx=`curl -s $pullurl$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+     echo "utx value: $utx"
+     read -p "press enter to continue" entr
+
     if [ $utx -gt 1200 ]
         then
             #$pktctl --wallet sendfrom $addr 0 [\"$addr\"]
