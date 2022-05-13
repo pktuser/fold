@@ -36,7 +36,8 @@ promptuser() {
     done
 }
 
-if [ -f fold.log ]; then loadlog(); else promptuser(); fi
+log=/fold.log
+if [ -f $log ]; then loadlog(); else promptuser(); fi
 
 clear
 printf "\n\n"
