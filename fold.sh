@@ -5,8 +5,8 @@ pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=7200 #in seconds
 
 clear
-printf "\n\n\nYOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND\n\n\n"
-printf "run pktwallet\n\n\n"
+printf "\n\n\nYOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND"
+printf "run pktwallet first to make wallet up to date\n\n\n"
 read -p "press enter to continue, ctrl-c to quit" entr
 clear
 
@@ -17,7 +17,7 @@ loadlog() {
         case $yn in
             Yes ) break;;
             No ) promptuser; return; break;;
-            Delete ) rm -rf fold.log; promptuser; return; break;;
+            Delete ) rm -rf fold.log; echo "Log deleted"; promptuser; return; break;;
         esac
     done
 
@@ -68,14 +68,9 @@ sleep 1
 x=0
 while true
 do
-     #eval curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' > utx
+     # curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' > utx
      utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
-     #utx=`curl -s https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ','`
-     #echo $pullURL
-     #echo $addr
-     #echo "utx value: $utx"
-     #read -p "press enter to continue" entr
-
+     echo "Unconsolidated transactions: $utx"
     if [ $utx -gt 1200 ]
         then
             $pktctl --wallet sendfrom $addr 0 [\"$addr\"]
