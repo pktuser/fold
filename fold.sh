@@ -41,7 +41,9 @@ loadlog() {
     echo "path:${log[0]}"
     echo "address: ${log[1]}"
     echo "password: ${log[2]}"
-    read -p "press enter to continue" entr
+    printf "\n"
+    #read -p "press enter to fold" entr
+    sleep 1
 }
 
 promptuser() {
@@ -52,14 +54,13 @@ promptuser() {
         while true; do
             clear
             printf "\n\n"
-            echo "Would you like to save these settings and your password in a local unencrypted file?"
+            printf "Would you like to save these settings and your password in a local ${RED}unencrypted${NF} file?\n"
             printf "Please note this is ${RED}very insecure${NF} and puts you at ${RED}risk of theft${NF} if anyone accesses this file\n"
             printf "\n"
             read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
         case $yn in
             yes ) printf "$pktctl\n$addr\n$pass" > fold.log; echo "log saved"; sleep 1; break;;
-            no ) echo "changes not saved"; sleep 1; break;;
-#            * ) echo "type yes or no"; sleep 1; break;;
+            no ) echo "inputs not saved"; sleep 1; break;;
         esac
         done
 }
@@ -75,7 +76,8 @@ log=fold.log
 if [ -f "$log" ]; then loadlog; else promptuser; fi
 # clear
 printf "\n\n"
-read -p "press enter to fold or press ctrl-c to exit" entr
+echo "Command set to: $pktctl  --wallet walletpassphrase "$pass" $locktime"
+read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
 # clear
 
 $pktctl  --wallet walletpassphrase "$pass" $locktime
