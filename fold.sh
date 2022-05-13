@@ -73,7 +73,7 @@ do
      echo "Unconsolidated transactions: $utx"
     if [ $utx -gt 1200 ]
         then
-            $pktctl --wallet sendfrom $addr 0 [\"$addr\"]
+            $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> transactions.log
             x=$(( $x + 1 ))
             echo "Folded $x times"
             sleep 10
@@ -86,3 +86,4 @@ done
 echo "Folding complete, locking wallet . . ."
 $pktctl --wallet walletlock
 echo "Wallet Locked"
+echo "Transactions addresses saved to transactions.log"
