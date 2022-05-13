@@ -68,9 +68,10 @@ sleep 1
 x=0
 while true
 do
-     eval curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' > utx
-     # utx=`curl -s $pullurl$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
-     echo $pullurl
+     #eval curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' > utx
+     #utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+     #utx=`curl -s https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ','`
+     echo $pullURL
      echo $addr
      echo "utx value: $utx"
      read -p "press enter to continue" entr
