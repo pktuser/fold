@@ -9,21 +9,34 @@ printf "\n\n\nYOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND\n\n\n
 read -p "press enter to continue, ctrl-c to quit" entr
 clear
 
-read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
-read -p "Wallet address: " addr
-read -p "Wallet passphrase: " pass
-printf "\n\n"
-echo "Would you like to save these settings and your password in a local unencrypted file?"
-echo "Please note this is very insecure and puts you at risk of theft if anyone accesses this file"
+loadlog() {
+    mapfile -t log < fold.log
+    clear
+    printf "\n\n loading log file . . ."
+    echo "address:${log[0]}"
+    echo "address: ${log[1]}"
+    echo "password: ${log[2]}"
+    read -p "press enter to continue" entr
+}
 
+promptuser() {
+    read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
+    read -p "Wallet address: " addr
+    read -p "Wallet passphrase: " pass
+    printf "\n\n"
+    echo "Would you like to save these settings and your password in a local unencrypted file?"
+    echo "Please note this is very insecure and puts you at risk of theft if anyone accesses this file"
 
-echo "Yes to save (insecure), No to continue without saving"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
-        No ) break;;
-    esac
-done
+    echo "Yes to save (insecure), No to continue without saving"
+        select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
+            No ) break;;
+        esac
+    done
+}
+
+if [ -f fold.log ]; then loadlog(); else promptuser(); fi
 
 clear
 printf "\n\n"
