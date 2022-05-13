@@ -53,11 +53,13 @@ promptuser() {
     printf "Please note this is ${RED}very insecure${NF} and puts you at ${RED}risk of theft${NF} if anyone accesses this file\n"
     printf "\n"
     read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
+        while true; do
         case $yn in
-            yes ) printf "$pktctl\n$addr\n$pass" > fold.log ;;
-            no ) ;;
-            * ) echo "type yes or no";;
+            yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
+            no ) break;;
+            * ) echo "type yes or no"; break;;
         esac
+        done
 }
 
 
