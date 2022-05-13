@@ -25,7 +25,7 @@ loadlog() {
         case $opt in
             Yes ) break;;
             No ) promptuser; return; break;;
-            Show ) echo $log;;
+            Show ) cat fold.log; printf "\n";;
             Delete ) rm -rf fold.log; echo "Log deleted"; sleep 1; promptuser; return; break;;
             * ) echo "try again";;
         esac
