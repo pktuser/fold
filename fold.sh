@@ -31,14 +31,15 @@ loadlog() {
     done
 
     mapfile -t log < fold.log
+    pktctl="${log[0]}"
+    addr="${log[1]}"
+    pass="${log[2]}"
+
     # clear
     printf "\n\nLog file loaded, as follows:\n\n"
     echo "path:${log[0]}"
-    pktctl="${log[0]}"
     echo "address: ${log[1]}"
-    addr="${log[1]}"
     echo "password: ${log[2]}"
-    pass="${log[2]}"
     read -p "press enter to continue" entr
 }
 
@@ -49,12 +50,12 @@ promptuser() {
     read -p "Wallet passphrase: " pass
     printf "\n\n"
     echo "Would you like to save these settings and your password in a local unencrypted file?"
-    echo "Please note this is ${RED}very insecure${NF} and puts you at ${RED}risk of theft${NF} if anyone accesses this file"
+    printf "Please note this is ${RED}very insecure${NF} and puts you at ${RED}risk of theft${NF} if anyone accesses this file\n"
     printf "\n"
     read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
         case $yn in
-            yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
-            no ) break;;
+            yes ) printf "$pktctl\n$addr\n$pass" > fold.log ;;
+            no ) ;;
             * ) echo "type yes or no";;
         esac
 }
