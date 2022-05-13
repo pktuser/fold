@@ -10,10 +10,19 @@ read -p "press enter to continue, ctrl-c to quit" entr
 clear
 
 loadlog() {
+    PS3="Select 1 or 2: "
+    echo "Load saved setting from file?"
+        select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) break;;
+            No ) promptuser; break;;
+        esac
+    done
+
     mapfile -t log < fold.log
     clear
-    printf "\n\n loading log file . . ."
-    echo "address:${log[0]}"
+    printf "\n\n loading log file . . .\n\n"
+    echo "path:${log[0]}"
     echo "address: ${log[1]}"
     echo "password: ${log[2]}"
     read -p "press enter to continue" entr
