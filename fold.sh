@@ -13,41 +13,47 @@ pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=7200 #in seconds
 
 
-# clear
-printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\npktwallet must be running in background for pktctl to work\nrun pktwallet first to make wallet up to date\n\n\n"
+clear
+printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\n\npktwallet must be running in background for pktctl to work\n\n\n"
 read -p "Press enter to continue, ctrl-c to quit" entr
-# clear
+clear
 
-loadlog() {
-    PS3="Select: "
-    echo "Load saved setting from file?"
-        select opt in "Yes" "No" "Show Log" "Delete"; do
-        case $opt in
-            Yes ) break;;
-            No ) promptuser; return; break;;
-            "Show Log" ) cat fold.log; printf "\n";;
-            Delete ) rm -rf fold.log; echo "Log deleted"; sleep 1; promptuser; return; break;;
-            * ) echo "try again";;
-        esac
-    done
-
+loadLog() { # load log to variable
+    
     mapfile -t log < fold.log
     pktctl="${log[0]}"
     addr="${log[1]}"
     pass="${log[2]}"
+    # show variables to user
+    displayLog
 
-    # clear
-    printf "\n\nLog file loaded, as follows:\n\n"
+}
+
+displayLog() {
+
+    clear
+    printf "\n\nLog file loaded as follows:\n\n"
     echo "path:${log[0]}"
     echo "address: ${log[1]}"
     echo "password: ${log[2]}"
     printf "\n"
     #read -p "press enter to fold" entr
     sleep 1
+
+}
+
+deleteLog() {
+
+    clear
+    rm -rf fold.log
+    echo "Log deleted"
+    sleep 1
+    promptuser
+
 }
 
 promptuser() {
-    # clear
+    clear
     read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
     read -p "Wallet address: " addr
     read -p "Wallet passphrase: " pass
@@ -73,8 +79,23 @@ promptuser() {
 # }
 
 log=fold.log
-if [ -f "$log" ]; then loadlog; else promptuser; fi
-# clear
+if [ -f "$log" ]
+    then 
+        PS3="Select: "
+        echo "Load saved setting from file?"
+        select opt in "Yes" "No" "Show Log" "Delete Log"
+        do
+            case $opt in
+                Yes ) loadLog;;
+                No ) promptuser;;
+                "Show Log" ) loadLog;;
+                "Delete Log" ) deleteLog;;
+                * ) echo "try again";;
+            esac
+        done
+    else promptuser
+fi
+clear
 printf "\n\n"
 echo "Command set to: $pktctl  --wallet walletpassphrase "$pass" $locktime"
 read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
