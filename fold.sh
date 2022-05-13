@@ -21,11 +21,11 @@ read -p "Press enter to continue, ctrl-c to quit" entr
 loadlog() {
     PS3="Select: "
     echo "Load saved setting from file?"
-        select opt in "Yes" "No" "Show" "Delete"; do
+        select opt in "Yes" "No" "Show Log" "Delete"; do
         case $opt in
             Yes ) break;;
             No ) promptuser; return; break;;
-            Show ) cat fold.log; printf "\n";;
+            "Show Log" ) cat fold.log; printf "\n";;
             Delete ) rm -rf fold.log; echo "Log deleted"; sleep 1; promptuser; return; break;;
             * ) echo "try again";;
         esac
