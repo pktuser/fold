@@ -37,10 +37,10 @@ promptuser() {
     echo "Please note this is very insecure and puts you at risk of theft if anyone accesses this file"
 
     echo "Yes to save (insecure), No to continue without saving"
-        select yn in "Yes" "No"; do
+        select yn in "Yes, save - insecure" "No, do not save - secure"; do
         case $yn in
-            Yes ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
-            No ) break;;
+            Yes, save - insecure ) printf "$pktctl\n$addr\n$pass" > fold.log; break;;
+            No, do not save - secure ) break;;
         esac
     done
 }
