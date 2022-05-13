@@ -6,13 +6,14 @@ locktime=7200 #in seconds
 
 clear
 printf "\n\n\nYOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND\n\n\n"
+printf "run pktwallet\n\n\n"
 read -p "press enter to continue, ctrl-c to quit" entr
 clear
 
 loadlog() {
     PS3="Select 1 - yes, 2 - no, 3 - delete log: "
     echo "Load saved setting from file?"
-        select yn in "Yes" "No"; do
+        select yn in "Yes" "No" "Delete"; do
         case $yn in
             Yes ) break;;
             No ) promptuser; break;;
@@ -24,8 +25,11 @@ loadlog() {
     clear
     printf "\n\nLog file loaded, as follows:\n\n"
     echo "path:${log[0]}"
+    pktctl="${log[0]}"
     echo "address: ${log[1]}"
+    addr="${log[1]}"
     echo "password: ${log[2]}"
+    pass="${log[2]}"
     read -p "press enter to continue" entr
 }
 
@@ -54,7 +58,7 @@ if [ -f "$log" ]; then loadlog; else promptuser; fi
 
 clear
 printf "\n\n"
-read -p "press ctrl-c to exit" entr
+read -p "press enter to fold or press ctrl-c to exit" entr
 
 $pktctl  --wallet walletpassphrase "$pass" $locktime
 unset pass
@@ -64,19 +68,21 @@ echo "Wallet unlocked"
 x=0
 while true
 do
-    # curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' 
-    utx=`curl $pullurl$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
-
-
-
-x=0
-while [ $x -lt $1 ]
-do 
-#/bin/pktctl --wallet sendfrom $addr 0 [\"$addr\"]
-x=$(( $x + 1 ))
-echo "Folded $x times"
-sleep 10
+     # curl https://explorer.pkt.cash/api/v1/PKT/pkt/address/pkt1q9dczv9ne8mfg98aya90kepflk2j2whhfqqn0mk | grep balanceCount | awk '{print $2;}' | tr -d ',' 
+     utx=`curl $pullurl$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+    
+    if [ $utx -gt 1200 ]
+        then
+            #$pktctl --wallet sendfrom $addr 0 [\"$addr\"]
+            x=$(( $x + 1 ))
+            echo "Folded $x times"
+            sleep 10
+        else
+            echo "Folded $x times"
+            break
+        fi
 done
-echo "Folding Complete, locking wallet . . ."
-/bin/pktctl --wallet walletlock
+
+echo "Folding complete, locking wallet . . ."
+$pktctl --wallet walletlock
 echo "Wallet Locked"
