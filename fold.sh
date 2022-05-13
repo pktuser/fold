@@ -14,7 +14,9 @@ locktime=7200 #in seconds
 
 
 clear
-printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\npktwallet must be running in background for pktctl to work\nrun pktwallet first to make wallet up to date\n\n\n"
+printf "\n\n\n"
+echo "${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}"
+printf "\npktwallet must be running in background for pktctl to work\nrun pktwallet first to make wallet up to date\n\n\n"
 read -p "Press enter to continue, ctrl-c to quit" entr
 clear
 
