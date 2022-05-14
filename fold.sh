@@ -14,33 +14,8 @@ locktime=3650 #in seconds
 
 
 clear
-printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work"
-printf "\n\nConfirming Wallet is up to date...${NF}"
-wallcurH=1
-wallbackH=2
-wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
-wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
-if [ $wallcurH -eq $wallbackH ] 
-    then
-        printf "\n${GREEN}your wallet is synced!\nproceeding to next step${NF}"
-        sleep 3
-    else
-        printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet"
-        printf "\nexiting program . . .${NF}"
-        sleep 3
-        exit
-fi
-
-read -p "enter to cont" entr
-
-
-
-
-
-
-
-#read -p "Press enter to continue, ctrl-c to quit" entr
-#sleep 1.5
+printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${NF}\n\n"
+read -p "press enter" entr
 clear
 
 loadLog() { # load log to variable
@@ -118,11 +93,27 @@ menuSelect() {
 
 }
 
-# testWallet() {
-    #in progress for future release
-    #test if pktwallet is running
-    #test if wallet is updated to latest block on chain
-# }
+testWallet() {
+
+    printf "\n\nConfirming Wallet is up to date...${NF}"
+    wallcurH=1
+    wallbackH=2
+    wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
+    wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
+    if [ $wallcurH -eq $wallbackH ] 
+        then
+            printf "\n${GREEN}your wallet is synced!\nproceeding to next step${NF}"
+            sleep 30
+        else
+            printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet"
+            printf "\nexiting program . . .${NF}"
+            sleep 30
+            exit
+    fi
+
+    read -p "enter to cont" entr
+
+}
 
 log=fold.log
 if [ -f "$log" ]
@@ -131,7 +122,8 @@ if [ -f "$log" ]
     else promptuser
 fi
 
-
+clear
+testWallet
 clear
 printf "\n\n"
 echo "Command set to: "
