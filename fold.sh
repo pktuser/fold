@@ -13,10 +13,10 @@ pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=7200 #in seconds
 
 
-clear
+##clear
 printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\n\npktwallet must be running in background for pktctl to work\n\n\n"
 read -p "Press enter to continue, ctrl-c to quit" entr
-clear
+##clear
 
 loadLog() { # load log to variable
     
@@ -31,7 +31,7 @@ loadLog() { # load log to variable
 
 displayLog() {
 
-    clear
+    ##clear
     printf "\n\nLog file loaded as follows:\n\n"
     echo "path:${log[0]}"
     echo "address: ${log[1]}"
@@ -44,7 +44,7 @@ displayLog() {
 
 deleteLog() {
 
-    clear
+    ##clear
     rm -rf fold.log
     echo "Log deleted"
     sleep 1
@@ -53,12 +53,12 @@ deleteLog() {
 }
 
 promptuser() {
-    clear
+    ##clear
     read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
     read -p "Wallet address: " addr
     read -p "Wallet passphrase: " pass
         while true; do
-            clear
+            ##clear
             printf "\n\n"
             printf "Would you like to save these settings and your password in a local ${RED}unencrypted${NF} file?\n"
             printf "Please note this is ${RED}very insecure${NF} and puts you at ${RED}risk of theft${NF} if anyone accesses this file\n"
@@ -95,7 +95,7 @@ if [ -f "$log" ]
         done
     else promptuser
 fi
-clear
+## clear
 printf "\n\n"
 echo "Command set to: $pktctl  --wallet walletpassphrase "$pass" $locktime"
 read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
