@@ -82,10 +82,10 @@ menuSelect() {
     select opt in "Yes" "No" "Show Log" "Delete Log"
     do
         case $opt in
-            Yes ) loadLog;;
-            No ) promptuser;;
-            "Show Log" ) showLog;;
-            "Delete Log" ) deleteLog;;
+            Yes ) loadLog; break;;
+            No ) promptuser; break;;
+            "Show Log" ) showLog; break;;
+            "Delete Log" ) deleteLog; break;;
             * ) echo "try again";;
         esac
     done
@@ -103,6 +103,8 @@ if [ -f "$log" ]
 
     else promptuser
 fi
+
+
 ## clear
 printf "\n\n"
 echo "Command set to: "
