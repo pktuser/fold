@@ -108,7 +108,7 @@ fi
 clear
 printf "\n\n"
 echo "Command set to: "
-printf "$pktctl --wallet walletpassphrase \"$pass\" $locktime"
+printf "$pktctl --wallet walletpassphrase $pass $locktime"
 printf "\n\n\n"
 read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
 clear
