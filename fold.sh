@@ -42,6 +42,11 @@ displayLog() {
 
 }
 
+showLog() {
+    loadLog
+    menuSelect
+}
+
 deleteLog() {
 
     ##clear
@@ -71,6 +76,20 @@ promptuser() {
         done
 }
 
+menuSelect() {
+    PS3="Select: "
+    echo "Load saved setting from file?"
+    select opt in "Yes" "No" "Show Log" "Delete Log"
+    do
+        case $opt in
+            Yes ) loadLog;;
+            No ) promptuser;;
+            "Show Log" ) loadLog;;
+            "Delete Log" ) deleteLog;;
+            * ) echo "try again";;
+        esac
+    done
+}
 
 # testWallet() {
     #in progress for future release
@@ -80,26 +99,14 @@ promptuser() {
 
 log=fold.log
 if [ -f "$log" ]
-    then 
-#        while true; do
-        PS3="Select: "
-        echo "Load saved setting from file?"
-        select opt in "Yes" "No" "Show Log" "Delete Log"
-        do
-            case $opt in
-                Yes ) loadLog;;
-                No ) promptuser;;
-                "Show Log" ) loadLog; break;;
-                "Delete Log" ) deleteLog;;
-                * ) echo "try again";;
-            esac
-        done
-#        done
+    then menuSelect
+
     else promptuser
 fi
 ## clear
 printf "\n\n"
-echo "Command set to: $pktctl  --wallet walletpassphrase "$pass" $locktime"
+echo "Command set to: "
+printf "$pktctl  --wallet walletpassphrase "$pass" $locktime\n"
 read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
 # clear
 
