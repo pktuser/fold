@@ -121,7 +121,7 @@ if [ -f "$log" ]
 
     else promptuser
 fi
-
+ 
 clear
 testWallet
 clear
