@@ -95,7 +95,7 @@ menuSelect() {
 
 testWallet() {
 
-    printf "\n\nConfirming Wallet is up to date...${NF}\n"
+    printf "\n\nConfirming Wallet is up to date...${NF}\n\n"
     wallcurH=1
     wallbackH=2
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
@@ -106,16 +106,14 @@ testWallet() {
     
     if [ $wallcurH -eq $wallbackH ] 
         then
-            printf "\n${GREEN}your wallet is synced!\nproceeding to next step${NF}\n"
-            sleep 30
+            printf "\n${GREEN}your wallet is synced!\nproceeding to fold${NF}\n"
+            sleep 3
         else
             printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet\n"
-            printf "\nexiting program . . .${NF}\n"
-            sleep 30
+            printf "\nexiting program . . .${NF}\n\n"
+            sleep 3
             exit
     fi
-
-    read -p "enter to cont" entr
 
 }
 
@@ -128,19 +126,19 @@ fi
  
 clear
 testWallet
-clear
+
 printf "\n\n"
 echo "Command set to: "
 printf "$pktctl --wallet walletpassphrase $pass $locktime"
-printf "\n\n\n"
-read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
-clear
+printf "\n\n"
+# read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
+# clear
 
 $pktctl  --wallet walletpassphrase "$pass" $locktime
 unset pass
-printf "\n\n\n"
+# printf "\n\n\n"
 echo "Wallet unlocked"
-sleep 1
+# sleep 1
 
 x=0
 while true
@@ -162,4 +160,4 @@ done
 echo "Folding complete, locking wallet . . ."
 $pktctl --wallet walletlock
 echo "Wallet Locked"
-echo "Transaction id's saved to transactions.log"
+echo "Transaction hashes saved to transactions.log"
