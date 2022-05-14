@@ -95,14 +95,14 @@ menuSelect() {
 
 testWallet() {
 
-    printf "\n\nConfirming Wallet is up to date...${NF}"
+    printf "\n\nConfirming Wallet is up to date...${NF}\n"
     wallcurH=1
     wallbackH=2
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     
-    echo $wallcurH
-    echo $wallbackH
+    echo "Current block height: "$wallcurH
+    echo "Current wallet height: "$wallbackH
     
     if [ $wallcurH -eq $wallbackH ] 
         then
