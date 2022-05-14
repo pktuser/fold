@@ -5,18 +5,12 @@
 # a e s t h e t i c s 
 RED='\033[31m'
 GREEN='\033[32m'
-NF='\033[0m' # No Format
+CF='\033[0m' # Clear Formatting
 UNDERLINE='\033[4m'
 GREY='\033[90m'
 
 pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=3650 #in seconds
-
-
-clear
-printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${NF}\n\n"
-read -p "press enter" entr
-clear
 
 loadLog() { # load log to variable
     
@@ -61,18 +55,29 @@ promptuser() {
     read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
     read -p "Wallet address: " addr
     read -p "Wallet passphrase: " pass
-        while true; do
-            clear
-            printf "\n\n"
-            printf "Would you like to save these settings and your password in a local ${RED}unencrypted${NF} file?\n"
-            printf "Please note this is ${RED}very insecure${NF} and puts you at ${RED}risk of theft${NF} if anyone accesses this file\n"
-            printf "\n"
-            read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
+    
+    while [ ! -f "$pktctl" ]
+    do
+        clear
+        printf "${RED}/path/to/pktctl as entered is not valid\n"
+        printf "Path stored as: $path\n"
+        printf "try: $HOME/bin/pktctl${CF}\n"
+        read -p "Please re-enter path: " pktctl
+    done
+    
+    while true; do
+        clear
+        printf "\n\n"
+        printf "Would you like to save these settings and your password in a local ${RED}unencrypted${CF} file?\n"
+        printf "Please note this is ${RED}very insecure${CF} and puts you at ${RED}risk of theft${CF} if anyone accesses this file\n"
+        printf "\n"
+        read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
         case $yn in
             yes ) printf "$pktctl\n$addr\n$pass" > fold.log; echo "log saved"; sleep 1; break;;
             no ) echo "inputs not saved"; sleep 1; break;;
         esac
-        done
+    done
+
 }
 
 menuSelect() {
@@ -95,7 +100,7 @@ menuSelect() {
 
 testWallet() {
 
-    printf "\n\nConfirming Wallet is up to date...${NF}\n\n"
+    printf "\n\nConfirming Wallet is up to date...${CF}\n\n"
     wallcurH=1
     wallbackH=2
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
@@ -106,16 +111,21 @@ testWallet() {
     
     if [ $wallcurH -eq $wallbackH ] 
         then
-            printf "\n${GREEN}your wallet is synced!\nproceeding to fold${NF}\n"
+            printf "\n${GREEN}your wallet is synced!\nproceeding to fold${CF}\n"
             sleep 3
         else
             printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet\n"
-            printf "\nexiting program . . .${NF}\n\n"
+            printf "\nexiting program . . .${CF}\n\n"
             sleep 3
             exit
     fi
 
 }
+
+clear
+printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${CF}\n\n"
+read -p "press enter to confirm, ctrl-c to exit" entr
+# clear
 
 log=fold.log
 if [ -f "$log" ]
