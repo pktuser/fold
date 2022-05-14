@@ -150,7 +150,7 @@ read -p "press enter to confirm, ctrl-c to exit" entr
 
 log=fold.log
 if [ -f "$log" ]
-    then menuSelect
+    then loadLog; menuSelect
 
     else promptuser
 fi
