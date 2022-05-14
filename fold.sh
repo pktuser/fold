@@ -101,8 +101,8 @@ testWallet() {
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     
-    echo "Current block height: "$wallcurH
-    echo "Current wallet height: "$wallbackH
+    echo "Current height: "$wallcurH #this might be wallet height
+    echo "Backend height: "$wallbackH #this might be block height
     
     if [ $wallcurH -eq $wallbackH ] 
         then
