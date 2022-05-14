@@ -85,13 +85,14 @@ menuSelect() {
     clear
     PS3="Select: "
     echo "Load saved setting from file?"
-    select opt in "Yes" "No" "Show Log" "Delete Log"
+    select opt in "Yes" "No" "Show Log" "Delete Log" "Show Status"
     do
         case $opt in
             Yes ) loadLog; break;;
             No ) promptuser; break;;
             "Show Log" ) showLog; break;;
             "Delete Log" ) deleteLog; break;;
+            "Show Status" ) walletStatus; break;;
             * ) echo "try again";;
         esac
     done
@@ -106,8 +107,8 @@ testWallet() {
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     
-    echo "Current height: "$wallcurH  # wallet height
-    echo "Backend height: "$wallbackH # block height
+    echo "Current block height: "$wallbackH # block height    
+    echo "Wallet height: "$wallcurH  # wallet height
 
     range=30 # height must be within $range blocks
     compare=$(($wallbackH-$wallcurH))
@@ -123,6 +124,19 @@ testWallet() {
             exit
     fi
 
+}
+
+walletStatus() {
+    
+    utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+    echo "Unconsolidated transactions: $utx"
+
+    wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
+    wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
+
+    echo "Current block height: "$wallbackH # block height    
+    echo "Wallet height: "$wallcurH  # wallet height
+    
 }
 
 clear
