@@ -106,11 +106,11 @@ testWallet() {
     
     if [ $wallcurH -eq $wallbackH ] 
         then
-            printf "\n${GREEN}your wallet is synced!\nproceeding to next step${NF}"
+            printf "\n${GREEN}your wallet is synced!\nproceeding to next step${NF}\n"
             sleep 30
         else
-            printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet"
-            printf "\nexiting program . . .${NF}"
+            printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet\n"
+            printf "\nexiting program . . .${NF}\n"
             sleep 30
             exit
     fi
