@@ -100,6 +100,10 @@ testWallet() {
     wallbackH=2
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
+    
+    echo $wallcurH
+    echo $wallbackH
+    
     if [ $wallcurH -eq $wallbackH ] 
         then
             printf "\n${GREEN}your wallet is synced!\nproceeding to next step${NF}"
