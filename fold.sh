@@ -112,10 +112,9 @@ testWallet() {
     range=30 # height must be within $range blocks
     compare=$(($wallbackH-$wallcurH))
 
-#    if [ $wallcurH -eq $wallbackH ] 
     if [ $compare -le $range ]
         then
-            printf "\n${GREEN}Wallet sync looks good!\nproceeding to fold${CF}\n"
+            printf "\n${GREEN}Wallet sync is within range!\nproceeding to fold${CF}\n"
             sleep 3
         else
             printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet\n"
