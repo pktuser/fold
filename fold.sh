@@ -31,6 +31,7 @@ if [ $wallcurH -eq $wallbackH ]
         exit
 fi
 
+read -p "enter to cont" entr
 
 
 
@@ -114,7 +115,7 @@ menuSelect() {
             * ) echo "try again";;
         esac
     done
-    
+
 }
 
 # testWallet() {
