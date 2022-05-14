@@ -81,6 +81,7 @@ promptuser() {
 log=fold.log
 if [ -f "$log" ]
     then 
+        while true; do
         PS3="Select: "
         echo "Load saved setting from file?"
         select opt in "Yes" "No" "Show Log" "Delete Log"
@@ -92,6 +93,7 @@ if [ -f "$log" ]
                 "Delete Log" ) deleteLog;;
                 * ) echo "try again";;
             esac
+        done
         done
     else promptuser
 fi
