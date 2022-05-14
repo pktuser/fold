@@ -128,6 +128,7 @@ testWallet() {
 
 walletStatus() {
     
+    clear
     utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
     echo "Unconsolidated transactions: $utx"
 
