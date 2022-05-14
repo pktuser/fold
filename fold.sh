@@ -136,6 +136,8 @@ walletStatus() {
 
     echo "Current block height: "$wallbackH # block height    
     echo "Wallet height: "$wallcurH  # wallet height
+
+    menuSelect
     
 }
 
