@@ -25,9 +25,7 @@ loadLog() { # load log to variable
     pktctl="${log[0]}"
     addr="${log[1]}"
     pass="${log[2]}"
-    # show variables to user
-    displayLog
-
+        
 }
 
 displayLog() {
@@ -38,13 +36,13 @@ displayLog() {
     echo "address: ${log[1]}"
     echo "password: ${log[2]}"
     printf "\n"
-    #read -p "press enter to fold" entr
-    sleep 1
-
+    read -p "press enter to continue" entr
+    
 }
 
 showLog() {
     loadLog
+    displayLog
     menuSelect
 }
 
