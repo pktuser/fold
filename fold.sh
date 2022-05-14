@@ -163,4 +163,4 @@ done
 echo "Folding complete, locking wallet . . ."
 $pktctl --wallet walletlock
 echo "Wallet Locked"
-echo "${GREEN}Transaction hashes saved to transactions.log${CF}"
+printf "${GREEN}Transaction hashes saved to transactions.log${CF}\n\n"
