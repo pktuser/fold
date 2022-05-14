@@ -84,7 +84,7 @@ menuSelect() {
         case $opt in
             Yes ) loadLog;;
             No ) promptuser;;
-            "Show Log" ) loadLog;;
+            "Show Log" ) showLog;;
             "Delete Log" ) deleteLog;;
             * ) echo "try again";;
         esac
