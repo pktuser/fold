@@ -15,7 +15,7 @@ locktime=7200 #in seconds
 
 clear
 printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\n\npktwallet must be running in background for pktctl to work\n\n\n"
-read -p "Press enter to continue, ctrl-c to quit" entr
+#read -p "Press enter to continue, ctrl-c to quit" entr
 sleep 1.5
 clear
 
