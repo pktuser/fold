@@ -106,8 +106,8 @@ testWallet() {
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     
-    echo "Current height: "$wallcurH #this might be wallet height
-    echo "Backend height: "$wallbackH #this might be block height
+    echo "Current height: "$wallcurH  # wallet height
+    echo "Backend height: "$wallbackH # block height
     
     if [ $wallcurH -eq $wallbackH ] 
         then
@@ -125,7 +125,6 @@ testWallet() {
 clear
 printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${CF}\n\n"
 read -p "press enter to confirm, ctrl-c to exit" entr
-# clear
 
 log=fold.log
 if [ -f "$log" ]
@@ -137,18 +136,9 @@ fi
 clear
 testWallet
 
-printf "\n\n"
-echo "Command set to: "
-printf "$pktctl --wallet walletpassphrase $pass $locktime"
-printf "\n\n"
-# read -p "If this looks correct, press enter to fold or press ctrl-c to exit" entr
-# clear
-
 $pktctl  --wallet walletpassphrase "$pass" $locktime
 unset pass
-# printf "\n\n\n"
 echo "Wallet unlocked"
-# sleep 1
 
 x=0
 while true
@@ -170,4 +160,4 @@ done
 echo "Folding complete, locking wallet . . ."
 $pktctl --wallet walletlock
 echo "Wallet Locked"
-echo "Transaction hashes saved to transactions.log"
+echo "${GREEN}Transaction hashes saved to transactions.log${CF}"
