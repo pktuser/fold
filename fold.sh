@@ -10,13 +10,36 @@ UNDERLINE='\033[4m'
 GREY='\033[90m'
 
 pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
-locktime=7200 #in seconds
+locktime=3650 #in seconds
 
 
 clear
-printf "\n\n\n${RED}YOUR WALLET MUST BE UP TO DATE PRIOR TO RUNNING THIS COMMAND${NF}\n\npktwallet must be running in background for pktctl to work\n\n\n"
+printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work"
+printf "\n\nConfirming Wallet is up to date...${NF}"
+wallcurH=1
+wallbackH=2
+wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
+wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
+if [ $wallcurH -eq $wallbackH ] 
+    then
+        printf "\n${GREEN}your wallet is synced!\nproceeding to next step${NF}"
+        sleep 3
+    else
+        printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet"
+        printf "\nexiting program . . .${NF}"
+        sleep 3
+        exit
+fi
+
+
+
+
+
+
+
+
 #read -p "Press enter to continue, ctrl-c to quit" entr
-sleep 1.5
+#sleep 1.5
 clear
 
 loadLog() { # load log to variable
@@ -57,6 +80,7 @@ deleteLog() {
 }
 
 promptuser() {
+   
     clear
     read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
     read -p "Wallet address: " addr
@@ -76,6 +100,7 @@ promptuser() {
 }
 
 menuSelect() {
+    
     clear
     PS3="Select: "
     echo "Load saved setting from file?"
@@ -89,6 +114,7 @@ menuSelect() {
             * ) echo "try again";;
         esac
     done
+    
 }
 
 # testWallet() {
