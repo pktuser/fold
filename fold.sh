@@ -136,6 +136,9 @@ walletStatus() {
 
     echo "Current block height: "$wallbackH # block height    
     echo "Wallet height: "$wallcurH  # wallet height
+    printf "\n\n"
+
+    read -p "press enter to continue" entr
 
     menuSelect
     
