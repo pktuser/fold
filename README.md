@@ -11,3 +11,6 @@ run with `bash ~/fold/fold.sh`
 update by navigating to install folder (typically `cd ~/fold`) and type (`git pull`)
 
 Feedback always welcome, @pktuser7373 on discord
+
+
+[^1]: next version will check if pktwallet is running, and run it in background if not. (05/15/22)
