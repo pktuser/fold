@@ -136,8 +136,8 @@ walletStatus() {
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     wallTotal=`$pktctl --wallet getaddressbalances 1 1 | grep -w total | awk '{print $2;}' | tr -d ','`
 
-    echo "Current block height: "$wallbackH # block height    
-    echo "Wallet height: "$wallcurH  # wallet height
+    echo "Current block height:  "$wallbackH # block height    
+    echo "Current Wallet height: "$wallcurH  # wallet height
     echo "Wallet total(s): \$PKT "$wallTotal
     printf "\n\n"
 
