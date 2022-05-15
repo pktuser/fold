@@ -6,7 +6,7 @@ Checks the number of unconsolidated txns and folds for you.
 install from comand line:
 `git clone https://github.com/pktuser/fold`
 
-run with `bash ~/fold.sh`
+run with `bash ~/fold/fold.sh`
 
 update by navigating to install folder (typically `cd ~/fold`) and type (`git pull`)
 
