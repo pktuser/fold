@@ -3,6 +3,8 @@ Folds coins in your address. Allows you to check status - current block height, 
 Checks the number of unconsolidated txns and folds for you.
 
 
+current version v1.0 [^1]
+
 install from comand line:
 `git clone https://github.com/pktuser/fold`
 
