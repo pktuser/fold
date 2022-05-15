@@ -101,14 +101,14 @@ menuSelect() {
 
 testWallet() {
 
-    printf "\n\nConfirming Wallet is up to date...${CF}\n\n"
+    printf "\n\nConfirming Wallet is up to date...\n\n"
     wallcurH=1
     wallbackH=2
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     
-    echo "Current block height: "$wallbackH # block height    
-    echo "Wallet height: "$wallcurH  # wallet height
+    echo "Current block height:  "$wallbackH # block height    
+    echo "Current wallet height: "$wallcurH  # wallet height
 
     range=30 # height must be within $range blocks
     compare=$(($wallbackH-$wallcurH))
@@ -136,9 +136,9 @@ walletStatus() {
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     wallTotal=`$pktctl --wallet getaddressbalances 1 1 | grep -w total | awk '{print $2;}' | tr -d ','`
 
-    echo "Current block height:  "$wallbackH # block height    
-    echo "Current Wallet height: "$wallcurH  # wallet height
-    echo "Wallet total(s): \$PKT "$wallTotal
+    echo "Current block height:       "$wallbackH # block height    
+    echo "Current wallet height:      "$wallcurH  # wallet height
+    echo "Wallet total(s): \$PKT      "$wallTotal
     printf "\n\n"
 
     read -p "press enter to continue" entr
