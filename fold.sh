@@ -139,23 +139,25 @@ walletStatus() {
     compare=$(($wallbackH-$wallcurH))
     wallTotal=`$pktctl --wallet getaddressbalances 1 1 | grep -w total | awk '{print $2;}' | tr -d ','`
 
+echo $compare
+
     if [[ $compare -eq 0 ]]; then
             
-            lag="${GREEN}Wallet is fully synced!${CF}\n"
+            lag="${GREEN}Wallet is fully synced!${CF}"
 
         elif [[ $compare -gt 0 ]] && [[ $compare -le 30 ]]; then
             
-            lag="${YELLOW}Wallet is $compare block behind blockchain. It is safe to fold.${CF}\n"
+            lag="${YELLOW}Wallet is $compare block behind blockchain. It is safe to fold.${CF}"
 
         else
             
-            lag="${RED}Wallet is $compare blocks behind blockchain. Advisable to wait before folding.${CF}\n"
+            lag="${RED}Wallet is $compare blocks behind blockchain. Advisable to wait before folding.${CF}"
     
     fi
 
     echo "Current block height..........: "$wallbackH # block height    
     echo "Current wallet height.........: "$wallcurH  # wallet height
-    printf $lag
+    printf $lag"\n"
     echo "Wallet total(s).........: \$PKT: "$wallTotal
     printf "\n\n"
 
