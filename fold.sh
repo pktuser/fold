@@ -5,7 +5,7 @@
 # a e s t h e t i c s 
 RED='\033[31m'
 GREEN='\033[32m'
-YELLOW='\033[1;5;33m'
+YELLOW='\033[33m'
 CF='\033[0m' # Clear Formatting
 UNDERLINE='\033[4m'
 GREY='\033[90m'
@@ -141,17 +141,17 @@ walletStatus() {
 
     if [[ $compare -eq 0 ]]
         then
-            lag="${GREEN}$compare${CF}"
+            lag="${GREEN}Wallet is fully synced!${CF}\n"
         elif [[ $compare -gt 0 ]] && [[ $compare -le 30 ]] 
         then
-            lag="${YELLOW}$compare${CF}"
+            lag="Wallet is ${YELLOW}Wallet is $compare block behind blockchain. It is safe to fold.${CF}\n"
         else
-            lag="${RED}$compare${CF}"
+            lag="${RED}Wallet is $compare blocks behind blockchain. Advisable to wait before folding.${CF}\n"
     fi
 
     echo "Current block height..........: "$wallbackH # block height    
     echo "Current wallet height.........: "$wallcurH  # wallet height
-    printf "Wallet is $lag blocks behind blockchain\n"
+    printf $lag
     echo "Wallet total(s).........: \$PKT: "$wallTotal
     printf "\n\n"
 
