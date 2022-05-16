@@ -131,15 +131,15 @@ walletStatus() {
     
     clear
     utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
-    echo "Unconsolidated transactions: $utx"
+    echo "Unconsolidated transactions...: $utx"
 
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     wallTotal=`$pktctl --wallet getaddressbalances 1 1 | grep -w total | awk '{print $2;}' | tr -d ','`
 
-    echo "Current block height........:"$wallbackH # block height    
-    echo "Current wallet height.......:"$wallcurH  # wallet height
-    echo "Wallet total(s)......: \$PKT: "$wallTotal
+    echo "Current block height..........: "$wallbackH # block height    
+    echo "Current wallet height.........: "$wallcurH  # wallet height
+    echo "Wallet total(s).........: \$PKT: "$wallTotal
     printf "\n\n"
 
     read -p "press enter to continue" entr
