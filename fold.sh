@@ -170,11 +170,11 @@ walletStatus() {
 
     if [[ $utx -gt 1199 ]]; then
 
-        printf "${YELLOW} Unconsolidated tx's are high - try to fold soon.${CF}\n"
+        txlag="${YELLOW} Unconsolidated tx's are high - try to fold soon.${CF}\n"
 
         elif [[ $utx -lt 1200 ]]; then
 
-        printf "${GREEN} Unconsolidated tx's are low - no need to fold!${CF}"
+        txlag="${GREEN} Unconsolidated tx's are low - no need to fold!${CF}"
 
     fi
 
@@ -183,6 +183,7 @@ walletStatus() {
     echo "Wallet total(s)...........\$PKT: "$wallTotal
     printf "\n\n"
     printf "$lag\n"
+    printf "$txlag\n"
     printf "\n"
 
     read -p "press enter to continue" entr
