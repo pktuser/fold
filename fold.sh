@@ -170,11 +170,11 @@ walletStatus() {
 
     if [[ $utx -gt 1199 ]]; then
 
-        txlag="${YELLOW} Unconsolidated tx's are high - try to fold soon.${CF}\n"
+        txlag="${YELLOW}Unconsolidated tx's are high - try to fold soon.${CF}\n"
 
         elif [[ $utx -lt 1200 ]]; then
 
-        txlag="${GREEN} Unconsolidated tx's are low - no need to fold!${CF}"
+        txlag="${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
 
     fi
 
