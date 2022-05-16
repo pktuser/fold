@@ -99,6 +99,7 @@ menuSelect() {
     
     clear
     PS3="Select: "
+    COLUMNS=0
     echo "What would you like to do?"
     select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins"
     do
