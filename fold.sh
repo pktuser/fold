@@ -11,6 +11,7 @@ GREY='\033[90m'
 
 pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=3650 #in seconds
+pktctl="/bin/pktctl"
 
 loadLog() { # load log to variable
     
@@ -52,7 +53,7 @@ deleteLog() {
 promptuser() {
    
     clear
-    read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl
+#    read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl #probably not needed - default install path ok
     read -p "Wallet address: " addr
     read -p "Wallet passphrase: " pass
     
@@ -168,8 +169,10 @@ echo "Wallet unlocked"
 x=0
 while true
 do
-     utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
-     echo "Unconsolidated transactions: $utx"
+
+    utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+    echo "Unconsolidated transactions: $utx"
+
     if [ $utx -gt 1200 ]
         then
             $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> transactions.log
@@ -177,9 +180,9 @@ do
             echo "Folded $x times"
             sleep 10
         else
-            echo "Folded $x times"
             break
-        fi
+    fi
+
 done
 
 echo "Folding complete, locking wallet . . ."
