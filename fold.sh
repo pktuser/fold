@@ -139,8 +139,6 @@ walletStatus() {
     compare=$(($wallbackH-$wallcurH))
     wallTotal=`$pktctl --wallet getaddressbalances 1 1 | grep -w total | awk '{print $2;}' | tr -d ','`
 
-echo $compare
-
     if [[ $compare -eq 0 ]]; then
             
             lag="${GREEN}Wallet is fully synced!${CF}"
