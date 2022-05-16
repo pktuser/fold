@@ -160,12 +160,22 @@ walletStatus() {
 
         elif [[ $compare -gt 0 ]] && [[ $compare -le 30 ]]; then
             
-            lag="${YELLOW}Wallet is $compare block behind blockchain. It is safe to fold.${CF}"
+            lag="${GREEN}Wallet is $compare block behind blockchain. It is safe to fold.${CF}\n"
 
         else
             
-            lag="${RED}Wallet is $compare blocks behind blockchain. Advisable to wait before folding.${CF}"
+            lag="${RED}Wallet is $compare blocks behind blockchain. Advisable to wait before folding.${CF}\n"
     
+    fi
+
+    if [[ $utx -gt 1199 ]]; then
+
+        printf "${YELLOW} Unconsolidated tx's are high - try to fold soon.${CF}\n"
+
+        elif [[ $utx -lt 1200 ]]; then
+
+        printf "${GREEN} Unconsolidated tx's are low - no need to fold!${CF}"
+
     fi
 
     echo "Current block height..........: "$wallbackH # block height    
