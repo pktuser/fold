@@ -14,6 +14,17 @@ pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
 locktime=3650 #in seconds
 pktctl="/bin/pktctl"
 
+testLog() {
+
+    log=fold.log
+    if [ -f "$log" ]
+        then loadLog; menuSelect
+
+        else promptUser
+    fi
+
+}
+
 loadLog() { # load log to variable
     
     mapfile -t log < fold.log
@@ -47,18 +58,18 @@ deleteLog() {
     rm -rf fold.log
     echo "Log deleted"
     sleep 1
-    promptuser
+    promptUser
 
 }
 
-promptuser() {
+promptUser() {
    
     clear
-#    read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl #probably not needed - default install path ok
+#   read -p "/path/to/pktctl (eg /bin/pktctl): " pktctl #probably not needed - default install path ok
     read -p "Wallet address: " addr
     read -p "Wallet passphrase: " pass
     
-    while [ ! -f "$pktctl" ]
+    while [ ! -f "$pktctl" ] #test if pktctl file exists in default location
     do
         clear
         printf "${RED}/path/to/pktctl as entered is not valid\n"
@@ -75,10 +86,12 @@ promptuser() {
         printf "\n"
         read -p "Type \"yes\" to save (insecure), type \"no\" to continue without saving: " yn
         case $yn in
-            yes ) printf "$pktctl\n$addr\n$pass" > fold.log; echo "log saved"; sleep 1; break;;
-            no ) echo "inputs not saved"; sleep 1; break;;
+            yes ) printf "$pktctl\n$addr\n$pass" > fold.log; printf "\n${GREEN}log saved${CF}"; sleep 1; break;;
+            no ) printf "\n${GREEN}inputs not saved${CF}\n"; sleep 1; break;;
         esac
     done
+
+    menuSelect
 
 }
 
@@ -86,15 +99,16 @@ menuSelect() {
     
     clear
     PS3="Select: "
-    echo "Load saved setting from file?"
-    select opt in "Yes" "No" "Show Log" "Delete Log" "Show Status"
+    echo "What would you like to do?"
+    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins"
     do
         case $opt in
-            Yes ) loadLog; break;;
-            No ) promptuser; break;;
-            "Show Log" ) showLog; break;;
-            "Delete Log" ) deleteLog; break;;
-            "Show Status" ) walletStatus; break;;
+            "Load Saved Settings" ) loadLog; break;;
+            "Enter New Settings" ) promptUser; break;;
+            "Display Saved Settings" ) showLog; break;;
+            "Delete Saved Settings" ) deleteLog; break;;
+            "Show Wallet Status" ) walletStatus; break;;
+            "Fold Coins" ) fold; break;;
             * ) echo "try again";;
         esac
     done
@@ -166,32 +180,21 @@ walletStatus() {
     
 }
 
-clear
-printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${CF}\n\n"
-read -p "press enter to confirm, ctrl-c to exit" entr
 
-log=fold.log
-if [ -f "$log" ]
-    then loadLog; menuSelect
+fold() {
 
-    else promptuser
-fi
- 
-clear
-testWallet
+    $pktctl  --wallet walletpassphrase "$pass" $locktime
+    unset pass
+    echo "Wallet unlocked"
 
-$pktctl  --wallet walletpassphrase "$pass" $locktime
-unset pass
-echo "Wallet unlocked"
+    x=0
+    while true
+    do
 
-x=0
-while true
-do
+        utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+        echo "Unconsolidated transactions: $utx"
 
-    utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
-    echo "Unconsolidated transactions: $utx"
-
-    if [ $utx -gt 1200 ]
+        if [ $utx -gt 1200 ]
         then
             $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> transactions.log
             x=$(( $x + 1 ))
@@ -199,11 +202,24 @@ do
             sleep 10
         else
             break
-    fi
+        fi
 
-done
+    done
 
-echo "Folding complete, locking wallet . . ."
-$pktctl --wallet walletlock
-echo "Wallet Locked"
-printf "${GREEN}Transaction hashes saved to transactions.log${CF}\n\n"
+    echo "Folding complete, locking wallet . . ."
+    $pktctl --wallet walletlock
+    echo "Wallet Locked"
+    printf "${GREEN}Transaction hashes saved to transactions.log${CF}\n\n"
+
+}
+
+
+# function calls
+clear
+printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${CF}\n\n"
+read -p "press enter to confirm, ctrl-c to exit" entr
+clear
+testLog
+testWallet
+fold
+
