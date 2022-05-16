@@ -158,7 +158,7 @@ echo $compare
     echo "Current block height..........: "$wallbackH # block height    
     echo "Current wallet height.........: "$wallcurH  # wallet height
     printf "$lag\n"
-    echo "Wallet total(s).........: \$PKT: "$wallTotal
+    echo "Wallet total(s)...........\$PKT: "$wallTotal
     printf "\n\n"
 
     read -p "press enter to continue" entr
