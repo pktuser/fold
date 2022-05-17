@@ -18,7 +18,7 @@ testLog() {
 
     log=fold.log
     if [ -f "$log" ]
-        then loadLog; menuSelect
+        then loadLog #; menuSelect
 
         else promptUser
     fi
@@ -31,6 +31,11 @@ loadLog() { # load log to variable
     pktctl="${log[0]}"
     addr="${log[1]}"
     pass="${log[2]}"
+
+    printf "\n${GREEN}Settings successfully loaded${CF}"
+    sleep 1
+
+    menuSelect
         
 }
 
@@ -44,13 +49,15 @@ displayLog() {
     printf "\n"
     read -p "press enter to continue" entr
 
+    menuSelect
+
 }
 
-showLog() {
-    loadLog
-    displayLog
-    menuSelect
-}
+#showLog() {
+#    loadLog
+#    displayLog
+#    menuSelect
+#}
 
 deleteLog() {
 
@@ -101,18 +108,21 @@ menuSelect() {
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
-    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins"
+    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Exit"
     do
         case $opt in
             "Load Saved Settings" ) loadLog; break;;
             "Enter New Settings" ) promptUser; break;;
-            "Display Saved Settings" ) showLog; break;;
+            "Display Saved Settings" ) displayLog; break;;
             "Delete Saved Settings" ) deleteLog; break;;
             "Show Wallet Status" ) walletStatus; break;;
             "Fold Coins" ) fold; break;;
+            "Exit" ) exit;;
             * ) echo "try again";;
         esac
     done
+    
+    #menuSelect
 
 }
 
@@ -134,11 +144,10 @@ testWallet() {
         then
             printf "\n${GREEN}Wallet sync is within range!\nproceeding to fold${CF}\n"
             sleep 3
+            fold
         else
             printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet\n"
-            printf "\nexiting program . . .${CF}\n\n"
-            sleep 3
-            exit
+            menuSelect
     fi
 
 }
@@ -197,7 +206,9 @@ fold() {
 
     $pktctl  --wallet walletpassphrase "$pass" $locktime
     unset pass
+    
     echo "Wallet unlocked"
+    echo "Beginning fold task"
 
     x=0
     while true
@@ -222,6 +233,9 @@ fold() {
     $pktctl --wallet walletlock
     echo "Wallet Locked"
     printf "${GREEN}Transaction hashes saved to transactions.log${CF}\n\n"
+    read -p "Press enter to continue" entr
+
+    menuSelect
 
 }
 
@@ -232,6 +246,5 @@ printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${
 read -p "press enter to confirm, ctrl-c to exit" entr
 clear
 testLog
-testWallet
-fold
+
 
