@@ -31,6 +31,7 @@ loadLog() { # load log to variable
     addr="${log[1]}"
     pass="${log[2]}"
 
+    clear
     printf "\n${GREEN}Settings successfully loaded${CF}"
     sleep 1
 
