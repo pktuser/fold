@@ -103,7 +103,7 @@ menuSelect() {
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
-    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Exit"
+    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Exit"
     do
         case $opt in
             "Load Saved Settings" ) loadLog; break;;
@@ -112,6 +112,7 @@ menuSelect() {
             "Delete Saved Settings" ) deleteLog; break;;
             "Show Wallet Status" ) walletStatus; break;;
             "Fold Coins" ) fold; break;;
+            "Show Transactions Log" ) cat transactions.log | more ;;
             "Exit" ) exit;;
             * ) echo "try again";;
         esac
