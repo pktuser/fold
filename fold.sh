@@ -236,6 +236,7 @@ fold() {
 
 # function calls
 clear
+echo "COMMITTED TO MAIN BABY"
 printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${CF}\n\n"
 read -p "press enter to confirm, ctrl-c to exit" entr
 clear
