@@ -11,15 +11,14 @@ UNDERLINE='\033[4m'
 GREY='\033[90m'
 
 pullURL="https://explorer.pkt.cash/api/v1/PKT/pkt/address/"
-locktime=3650 #in seconds
+locktime=9001 #in seconds
 pktctl="/bin/pktctl"
 
 testLog() {
 
     log=fold.log
     if [ -f "$log" ]
-        then loadLog #; menuSelect
-
+        then loadLog
         else promptUser
     fi
 
@@ -53,17 +52,12 @@ displayLog() {
 
 }
 
-#showLog() {
-#    loadLog
-#    displayLog
-#    menuSelect
-#}
-
 deleteLog() {
 
     clear
     rm -rf fold.log
-    echo "Log deleted"
+    unset $pass
+    printf "\n${GREEN}Saved settings deleted${CF}"
     sleep 1
     promptUser
 
