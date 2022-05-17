@@ -112,13 +112,19 @@ menuSelect() {
             "Delete Saved Settings" ) deleteLog; break;;
             "Show Wallet Status" ) walletStatus; break;;
             "Fold Coins" ) fold; break;;
-            "Show Transactions Log" ) cat transactions.log | more ;;
+            "Show Transactions Log" ) showTX; break;;
             "Exit" ) exit;;
             * ) echo "try again";;
         esac
     done
+
+}
+
+showTX() {
     
-    #menuSelect
+    cat transactions.log | more
+    read -p "press enter to continue" entr
+    menuSelect
 
 }
 
@@ -165,7 +171,7 @@ walletStatus() {
 
         elif [[ $compare -gt 0 ]] && [[ $compare -le 30 ]]; then
             
-            lag="${GREEN}Wallet is $compare block behind blockchain. It is safe to fold.${CF}\n"
+            lag="${GREEN}Wallet is $compare blocks behind blockchain. It is safe to fold.${CF}\n"
 
         else
             
