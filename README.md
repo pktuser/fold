@@ -12,6 +12,8 @@ run with `bash ~/fold/fold.sh`
 
 update by navigating to install folder (typically `cd ~/fold`) and type (`git pull`)
 
+donations always accepted in PKT `pkt1qxrdhkc8ayyjtla97wmudpgvpz3w0y0tfa7lhfu`
+
 Feedback always welcome, @pktuser7373 on discord
 
 
