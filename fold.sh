@@ -166,17 +166,10 @@ walletStatus() {
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     compare=$(($wallbackH-$wallcurH))
     wallBal=(`$pktctl --wallet getaddressbalances 1 1 | grep -w total | awk '{print $2;}' | tr -d ','`)
+    wallBal=(`printf "%'.2f\n" ${wallBal[@]}`)
     wallAddr=(`$pktctl --wallet getaddressbalances 1 1 | grep -w address | awk '{print $2;}' | tr -d ',"'`)
 
-    wallBal=(`printf "%'.2f\n" ${wallBal[@]}`)
 
-    for (( i=0; i<${#wallAddr[@]}; ++i ))
-    do
-        printf "Wallet [$i]: "${wallAddr[i]}
-        printf " PKT: "${wallBal[i]}"\n\n"
-#        printf ${wallTotal[i]}
-#        printf "\n\n"
-    done
 
     if [[ $compare -eq 0 ]]; then
             
@@ -204,7 +197,13 @@ walletStatus() {
 
     echo "Current block height..........: "$wallbackH # block height    
     echo "Current wallet height.........: "$wallcurH  # wallet height
-    echo "Wallet total(s)...........\$PKT: "$wallBal
+    echo "Wallet Balance(s):"
+    for (( i=0; i<${#wallAddr[@]}; ++i ))
+    do
+        printf "Wallet [$i]: "${wallAddr[i]}
+        printf " PKT: "${wallBal[i]}"\n"
+    done
+#    echo "Wallet total(s)...........\$PKT: "$wallBal
     printf "\n\n"
     printf "$lag\n"
     printf "$txlag\n"
