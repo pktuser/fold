@@ -197,24 +197,24 @@ walletStatus() {
 
     echo "Current block height..........: "$wallbackH # block height    
     echo "Current wallet height.........: "$wallcurH  # wallet height
-    printf "\nWallet Balance(s):"
+    printf "\nWallet Balance(s):\n"
     for (( i=0; i<${#wallAddr[@]}; ++i ))
     do
-        printf "Wallet [$i]: "${wallAddr[i]}
+        printf "Address [$i]: "${wallAddr[i]}
         printf "${GREEN} PKT: "${wallBal[i]}"\n${CF}"
     done
 
     numFolds=`echo "scale=0 ; $utx / 1440" | bc`
     timetoFold=$(( numfolds*10 ))
 
-    if [[ $numfolds -eq 0 ]]; then
+    if [[ $numFolds -eq 0 ]]; then
 
-        printf "Unconsolidated tx's are low - no need to fold!${CF}"
+        printf "${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
 
     else 
 
         printf "${YELLOW}Program estimates $numFolds folds require to consolidate mining income\n"
-        printf "Estimated time to complete is $timetoFold seconds"
+        printf "Estimated time to complete is $timetoFold seconds${CF}"
 
     fi
 
