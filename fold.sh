@@ -2,6 +2,8 @@
 #https://docs.pkt.cash/en/latest/pktd/pktwallet/
 #unset HISTFILE
 
+###################################### W A L L E T  B O S S  B R A N C H ###############################
+
 # a e s t h e t i c s 
 RED='\033[31m'
 GREEN='\033[32m'
