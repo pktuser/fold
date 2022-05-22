@@ -246,7 +246,7 @@ fold() {
         echo "Unconsolidated transactions: $utx"
 
         if [ $utx -gt 1440 ]
-#        then
+        then
             $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> transactions.log
             x=$(( $x + 1 ))
             echo "Folded $x times"
