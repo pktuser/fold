@@ -171,7 +171,9 @@ walletStatus() {
     for (( i=0; i<${#wallAddr[@]}; ++i ))
     do
         printf "Wallet [$i]: "${wallAddr[i]}
-        printf " PKT: "${wallTotal[i]}"\n\n"
+        printf " PKT: "
+        printf ${wallTotal[i]}
+        printf "\n\n"
     done
 
     if [[ $compare -eq 0 ]]; then
