@@ -205,15 +205,15 @@ walletStatus() {
     done
 
     numFolds=`echo "scale=0 ; $utx / 1440" | bc`
-    timetoFold=$(( numfolds*10 ))
+    timetoFold=`echo $(( numfolds*10 ))`
 
     if [[ $numFolds -eq 0 ]]; then
 
-        printf "${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
+        printf "\n${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
 
     else 
 
-        printf "${YELLOW}Program estimates $numFolds folds require to consolidate mining income\n"
+        printf "\n${GREEN}Program estimates $numFolds folds require to consolidate mining income\n"
         printf "Estimated time to complete is $timetoFold seconds${CF}"
 
     fi
