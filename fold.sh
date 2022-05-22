@@ -185,9 +185,13 @@ walletStatus() {
     
     fi
 
-    if [[ $utx -gt 1439 ]]; then
+    if [[ $utx -gt 1439 ]] && [[ $compare -le 30 ]]; then
 
-        txlag="${YELLOW}Unconsolidated tx's are high - try to fold soon.${CF}\n"
+        txlag="${YELLOW}Folding is recommended.${CF}\n"
+
+        elif [[ $utx -gt 1439 ]] && [[ $compare -gt 29 ]]; then
+
+        txlag="${RED}Folding recommended but allow wallet height to sync before folding."
 
         elif [[ $utx -lt 1440 ]]; then
 
@@ -207,17 +211,12 @@ walletStatus() {
     numFolds=`echo "scale=0 ; $utx / 1440" | bc`
     timetoFold=$( bc <<<"10*$numFolds" )
 
-    if [[ $numFolds -eq 0 ]]; then
+    if [[ $numFolds -gt 0 ]]; then
 
-        printf "\n${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
-
-    else 
-
-        printf "\n${GREEN}Program estimates $numFolds folds require to consolidate mining income\n"
-        printf "Estimated time to complete is $timetoFold seconds${CF}"
+        printf "\n${GREEN}Program estimates $numFolds folds required to consolidate mining income.\n"
+        printf "Estimated time to complete is $timetoFold seconds.${CF}"
 
     fi
-
 
     printf "\n\n"
     printf "$lag\n"
@@ -246,14 +245,14 @@ fold() {
         utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
         echo "Unconsolidated transactions: $utx"
 
-        if [ $utx -gt 1200 ]
-        then
+        if [ $utx -gt 1440 ]
+#        then
             $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> transactions.log
             x=$(( $x + 1 ))
             echo "Folded $x times"
-            sleep 10
-        else
-            break
+            sleep 8
+#        else
+#            break
         fi
 
     done
