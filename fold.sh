@@ -204,7 +204,7 @@ walletStatus() {
         printf "${GREEN} PKT: "${wallBal[i]}"\n${CF}"
     done
 
-    numFolds=`"scale=0 ; $utx / 1440" | bc`
+    numFolds=`echo "scale=0 ; $utx / 1440" | bc`
     timetoFold=$(( numfolds*10 ))
 
     if [[ $numfolds -eq 0 ]]; then
