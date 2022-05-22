@@ -185,7 +185,7 @@ walletStatus() {
     
     fi
 
-    if [[ $utx -gt 1199 ]]; then
+    if [[ $utx -gt 1439 ]]; then
 
         txlag="${YELLOW}Unconsolidated tx's are high - try to fold soon.${CF}\n"
 
@@ -205,7 +205,7 @@ walletStatus() {
     done
 
     numFolds=`echo "scale=0 ; $utx / 1440" | bc`
-    timetoFold=`echo $(( numfolds*10 ))`
+    timetoFold=$( bc <<<"10*$numFolds" )
 
     if [[ $numFolds -eq 0 ]]; then
 
