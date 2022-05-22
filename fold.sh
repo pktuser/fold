@@ -205,7 +205,7 @@ walletStatus() {
     done
 
     numFolds=`"scale=0 ; $utx / 1440" | bc`
-    timetoFold=(( $numfolds * 10 ))
+    timetoFold=$(( numfolds*10 ))
 
     if [[ $numfolds -eq 0 ]]; then
 
