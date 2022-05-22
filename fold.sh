@@ -251,8 +251,8 @@ fold() {
             x=$(( $x + 1 ))
             echo "Folded $x times"
             sleep 8
-#        else
-#            break
+        else
+            break
         fi
 
     done
