@@ -189,7 +189,7 @@ walletStatus() {
 
         txlag="${YELLOW}Unconsolidated tx's are high - try to fold soon.${CF}\n"
 
-        elif [[ $utx -lt 1200 ]]; then
+        elif [[ $utx -lt 1440 ]]; then
 
         txlag="${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
 
@@ -197,13 +197,28 @@ walletStatus() {
 
     echo "Current block height..........: "$wallbackH # block height    
     echo "Current wallet height.........: "$wallcurH  # wallet height
-    echo "Wallet Balance(s):"
+    printf "\nWallet Balance(s):"
     for (( i=0; i<${#wallAddr[@]}; ++i ))
     do
         printf "Wallet [$i]: "${wallAddr[i]}
-        printf " PKT: "${wallBal[i]}"\n"
+        printf "${GREEN} PKT: "${wallBal[i]}"\n${CF}"
     done
-#    echo "Wallet total(s)...........\$PKT: "$wallBal
+
+    numFolds=`"scale=0 ; $utx / 1440" | bc`
+    timetoFold=(( $numfolds * 10 ))
+
+    if [[ $numfolds -eq 0 ]]; then
+
+        printf "Unconsolidated tx's are low - no need to fold!${CF}"
+
+    else 
+
+        printf "${YELLOW}Program estimates $numFolds folds require to consolidate mining income\n"
+        printf "Estimated time to complete is $timetoFold seconds"
+
+    fi
+
+
     printf "\n\n"
     printf "$lag\n"
     printf "$txlag\n"
