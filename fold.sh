@@ -162,11 +162,11 @@ walletStatus() {
 
     #utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
     addrValues=`curl -s $pullURL$addr`
-    utx="`cat $addrValues | grep balanceCount | awk '{print $2;}' | tr -d ','`"
+    utx="`echo "$addrValues" | grep balanceCount | awk '{print $2;}' | tr -d ','`"
     echo "Unconsolidated transactions...: $utx"
-    wallMinedRaw="`cat $addrValues | grep balanceCount | awk '{print $2;}' | tr -d ','`"
+    wallMinedRaw="`echo "$addrValues" | grep balanceCount | awk '{print $2;}' | tr -d ','`"
     echo "this is wallMinedRaw: $wallMinedRaw"
-    wallMined24=$( bc <<<"$wallMinedRaw/1073741824" )
+    wallMined24=$( bc <<<"$wallMinedRaw/1073741824" ) #(`printf "%'.2f\n" ${wallBal[@]}`)
     echo "PKT mined previous 24 hours: $wallMined24"
 
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
@@ -178,31 +178,20 @@ walletStatus() {
 
 
 
-    if [[ $compare -eq 0 ]]; then
-            
+    if [[ $compare -eq 0 ]]; then            
             lag="${GREEN}Wallet is fully synced!${CF}"
-
         elif [[ $compare -gt 0 ]] && [[ $compare -le 30 ]]; then
-            
             lag="${GREEN}Wallet is $compare blocks behind blockchain. It is safe to fold.${CF}\n"
-
         else
-            
             lag="${RED}Wallet is $compare blocks behind blockchain. Advisable to wait before folding.${CF}\n"
-    
     fi
 
     if [[ $utx -gt 1439 ]] && [[ $compare -le 30 ]]; then
-
-        txlag="${YELLOW}Folding is recommended.${CF}\n"
-
+            txlag="${YELLOW}Folding is recommended.${CF}\n"
         elif [[ $utx -gt 1439 ]] && [[ $compare -gt 29 ]]; then
-
-        txlag="${RED}Folding recommended but allow wallet height to sync before folding."
-
+            txlag="${RED}Folding recommended but allow wallet height to sync before folding."
         elif [[ $utx -lt 1440 ]]; then
-
-        txlag="${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
+            txlag="${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
 
     fi
 
