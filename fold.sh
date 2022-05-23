@@ -173,8 +173,8 @@ walletStatus() {
     #load data from explorer.pkt.cash (pullURL)
     addrValues=`curl -s $pullURL$addr`
     utx="`echo "$addrValues" | grep balanceCount | awk '{print $2;}' | tr -d ','`"
-    utx="`printf "%'d" $utx`"
-    echo "Unconsolidated transactions...: $utx"
+    utxDisp="`printf "%'d" $utx`"
+    echo "Unconsolidated transactions...: $utxDisp"
     
     wallMinedRaw="`echo "$addrValues" | grep mined24 | awk '{print $2;}' | tr -d ',"'`"
     wallMined24="`echo "scale=2 ; $wallMinedRaw / 1073741824" | bc`"
@@ -222,7 +222,7 @@ walletStatus() {
     fi
 
 #   printf "%'.2f" $bandwidth
-    printf "Current block height..............: ""%'d\n" $wallbackH # block height    
+    printf "Current block height..............: ""%'d\n" $wallbackH # block height
     printf "Current wallet height.............: ""%'d\n" $wallcurH  # wallet height
     printf "\nWallet Balance(s):\n"
     for (( i=0; i<${#wallAddr[@]}; ++i ))
