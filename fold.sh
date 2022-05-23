@@ -124,7 +124,7 @@ menuSelect() {
 
 showTX() {
     
-    cat transactions.log | less
+    cat transactions.log | more -n10
     read -p "press enter to continue" entr
     menuSelect
 
