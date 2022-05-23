@@ -171,6 +171,7 @@ checkTx() {
     #http://pkt.world/api/tx/f4163ca19d3f2cc01ced3bc36458967160da10da2fd661b1875716e257400c41?hex=no&vin=no&vout=no
     #prompt user to enter tx id (manual copy paste from transactions.log)
     #or pull most recent? (query transactions.log as a matrix?)
+    echo "checkTx()"
 }
 
 walletStatus() {
