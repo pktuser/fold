@@ -124,7 +124,7 @@ menuSelect() {
 
 showTX() {
     
-    cat transactions.log | more
+    cat transactions.log | less
     read -p "press enter to continue" entr
     menuSelect
 
@@ -164,6 +164,13 @@ sendPKT() {
 addressBook() {
     #save sendto addresses to an array or something
     echo "addressBook()"
+}
+
+checkTx() {
+    #check latest transactions
+    #http://pkt.world/api/tx/f4163ca19d3f2cc01ced3bc36458967160da10da2fd661b1875716e257400c41?hex=no&vin=no&vout=no
+    #prompt user to enter tx id (manual copy paste from transactions.log)
+    #or pull most recent? (query transactions.log as a matrix?)
 }
 
 walletStatus() {
@@ -221,7 +228,6 @@ walletStatus() {
 
     fi
 
-#   printf "%'.2f" $bandwidth
     printf "Current block height..............: ""%'d\n" $wallbackH # block height
     printf "Current wallet height.............: ""%'d\n" $wallcurH  # wallet height
     printf "\nWallet Balance(s):\n"
