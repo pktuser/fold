@@ -156,6 +156,14 @@ testWallet() {
 
 }
 
+sendPKT() {
+    #function call to send PKT
+}
+
+addressBook() {
+    #save sendto addresses to an array or something
+}
+
 walletStatus() {
     
     clear
@@ -168,6 +176,17 @@ walletStatus() {
     wallMinedRaw="`echo "$addrValues" | grep mined24 | awk '{print $2;}' | tr -d ',"'`"
     wallMined24="`echo "scale=2 ; $wallMinedRaw / 1073741824" | bc`"
     echo "PKT mined previous 24 hours...: $wallMined24"
+
+    #current hashrate
+    
+    #snapshot hash rate - this pulls hashrate at moment of request. This needs to show avg hashrate for $blockcount number of blocks
+    whotopay=`curl http://pool.pkt.world/pay/whotopay`
+    hashrate="`echo "$whotopay" | grep -A 5 "$addr" | grep "currentEncryptionsPerSecond" | awk '{print $2}' | tr -d ','`"
+    echo "Current mining hashrate to wallet: $hashrate"
+    #current bandwidth
+    bandwidthRaw="`echo "$whotopay" | grep -A 5 "$addr" | grep "kbps" | awk '{print $2}' | tr -d ','`"
+    bandwidth="`echo "scale=2 ; $bandwidthRaw / 1000" | bc`"
+    echo "Current mining bandwidth to wallet: $bandwidth mbps"
 
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
