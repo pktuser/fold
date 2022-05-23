@@ -158,10 +158,12 @@ testWallet() {
 
 sendPKT() {
     #function call to send PKT
+    echo "sendPKT()"
 }
 
 addressBook() {
     #save sendto addresses to an array or something
+    echo "addressBook()"
 }
 
 walletStatus() {
