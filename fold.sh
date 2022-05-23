@@ -173,6 +173,7 @@ walletStatus() {
     #utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
     addrValues=`curl -s $pullURL$addr`
     utx="`echo "$addrValues" | grep balanceCount | awk '{print $2;}' | tr -d ','`"
+    utx="`printf "%'d" %utx`"
     echo "Unconsolidated transactions...: $utx"
     
     wallMinedRaw="`echo "$addrValues" | grep mined24 | awk '{print $2;}' | tr -d ',"'`"
@@ -184,13 +185,16 @@ walletStatus() {
     hashrate="`echo "$whotopay" | grep -A 5 "$addr" | grep "currentEncryptionsPerSecond" | awk '{print $2}' | tr -d ','`"
     hashrate="`echo "$hashrate / 1000" | bc`"
     hashrate="`printf "%'d" $hashrate`"
-    echo "Current mining hashrate to wallet: $hashrate Ke/s"
+    printf "\n"
+    echo "Current mining hashrate to wallet.: $hashrate Ke/s"
     #current bandwidth
     bandwidthRaw="`echo "$whotopay" | grep -A 5 "$addr" | grep "kbps" | awk '{print $2}' | tr -d ','`"
     bandwidth="`echo "scale=2 ; $bandwidthRaw / 1000" | bc`"
     bandwidth="`printf "%'.2f" $bandwidth`"
     echo "Current mining bandwidth to wallet: $bandwidth mbps"
+    printf "\n"
 
+    #load data from pktwallet
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
     compare=$(($wallbackH-$wallcurH))
@@ -217,8 +221,9 @@ walletStatus() {
 
     fi
 
-    echo "Current block height..........: "$wallbackH # block height    
-    echo "Current wallet height.........: "$wallcurH  # wallet height
+#   printf "%'.2f" $bandwidth
+    printf "Current block height..............: ""%'d" $wallbackH # block height    
+    printf "Current wallet height.............: ""%'d"$wallcurH  # wallet height
     printf "\nWallet Balance(s):\n"
     for (( i=0; i<${#wallAddr[@]}; ++i ))
     do
