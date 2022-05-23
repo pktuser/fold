@@ -180,17 +180,15 @@ walletStatus() {
     echo "PKT mined previous 24 hours...: $wallMined24"
 
     #current hashrate
-    
-    #snapshot hash rate - this pulls hashrate at moment of request. This needs to show avg hashrate for $blockcount number of blocks
     whotopay=`curl -s http://pool.pkt.world/pay/whotopay`
     hashrate="`echo "$whotopay" | grep -A 5 "$addr" | grep "currentEncryptionsPerSecond" | awk '{print $2}' | tr -d ','`"
     hashrate="`echo "$hashrate / 1000" | bc`"
-    hashrate="`printf "%'f.2" $hashrate`"
+    hashrate="`printf "%'d" $hashrate`"
     echo "Current mining hashrate to wallet: $hashrate Ke/s"
     #current bandwidth
     bandwidthRaw="`echo "$whotopay" | grep -A 5 "$addr" | grep "kbps" | awk '{print $2}' | tr -d ','`"
     bandwidth="`echo "scale=2 ; $bandwidthRaw / 1000" | bc`"
-    bandwidth="`printf "%'f.2" $bandwidth`"
+    bandwidth="`printf "%'.2f" $bandwidth`"
     echo "Current mining bandwidth to wallet: $bandwidth mbps"
 
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
