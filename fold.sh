@@ -164,10 +164,10 @@ walletStatus() {
     addrValues=`curl -s $pullURL$addr`
     utx="`echo "$addrValues" | grep balanceCount | awk '{print $2;}' | tr -d ','`"
     echo "Unconsolidated transactions...: $utx"
+    
     wallMinedRaw="`echo "$addrValues" | grep mined24 | awk '{print $2;}' | tr -d ',"'`"
-    echo "this is wallMinedRaw: $wallMinedRaw"
     wallMined24="`echo "scale=2 ; $wallMinedRaw / 1073741824" | bc`"
-    echo "PKT mined previous 24 hours: $wallMined24"
+    echo "PKT mined previous 24 hours...: $wallMined24"
 
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
