@@ -222,8 +222,8 @@ walletStatus() {
     fi
 
 #   printf "%'.2f" $bandwidth
-    printf "Current block height..............: ""%'d" $wallbackH"\n" # block height    
-    printf "Current wallet height.............: ""%'d" $wallcurH"\n"  # wallet height
+    printf "Current block height..............: ""%'d\n" $wallbackH # block height    
+    printf "Current wallet height.............: ""%'d\n" $wallcurH  # wallet height
     printf "\nWallet Balance(s):\n"
     for (( i=0; i<${#wallAddr[@]}; ++i ))
     do
