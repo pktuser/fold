@@ -166,7 +166,7 @@ walletStatus() {
     echo "Unconsolidated transactions...: $utx"
     wallMinedRaw="`echo "$addrValues" | grep mined24 | awk '{print $2;}' | tr -d ',"'`"
     echo "this is wallMinedRaw: $wallMinedRaw"
-    wallMined24=echo "scale=2 ; $wallMinedRaw / 1073741824" | bc #$( bc <<<"$wallMinedRaw/1073741824" ) #(`printf "%'.2f\n" ${wallBal[@]}`)
+    wallMined24="`echo "scale=2 ; $wallMinedRaw / 1073741824" | bc`"
     echo "PKT mined previous 24 hours: $wallMined24"
 
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
