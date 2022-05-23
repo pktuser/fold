@@ -159,8 +159,15 @@ testWallet() {
 walletStatus() {
     
     clear
-    utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+
+    #utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+    addrValues=`curl -s $pullURL$addr`
+    utx="`cat $addrValues | grep balanceCount | awk '{print $2;}' | tr -d ','`"
     echo "Unconsolidated transactions...: $utx"
+    wallMinedRaw="`cat $addrValues | grep balanceCount | awk '{print $2;}' | tr -d ','`"
+    echo "this is wallMinedRaw: $wallMinedRaw"
+    wallMined24=$( bc <<<"$wallMinedRaw/1073741824" )
+    echo "PKT mined previous 24 hours: $wallMined24"
 
     wallcurH=`$pktctl --wallet getinfo | grep CurrentHeight | awk '{print $2;}' | tr -d ','`
     wallbackH=`$pktctl --wallet getinfo | grep BackendHeight | awk '{print $2;}' | tr -d ','`
