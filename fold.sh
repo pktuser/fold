@@ -170,7 +170,7 @@ walletStatus() {
     
     clear
 
-    #utx=`curl -s $pullURL$addr | grep balanceCount | awk '{print $2;}' | tr -d ','`
+    #load data from explorer.pkt.cash (pullURL)
     addrValues=`curl -s $pullURL$addr`
     utx="`echo "$addrValues" | grep balanceCount | awk '{print $2;}' | tr -d ','`"
     utx="`printf "%'d" %utx`"
@@ -188,8 +188,8 @@ walletStatus() {
     printf "\n"
     echo "Current mining hashrate to wallet.: $hashrate Ke/s"
     #current bandwidth
-    bandwidthRaw="`echo "$whotopay" | grep -A 5 "$addr" | grep "kbps" | awk '{print $2}' | tr -d ','`"
-    bandwidth="`echo "scale=2 ; $bandwidthRaw / 1000" | bc`"
+    bandwidth="`echo "$whotopay" | grep -A 5 "$addr" | grep "kbps" | awk '{print $2}' | tr -d ','`"
+    bandwidth="`echo "scale=2 ; $bandwidth / 1000" | bc`"
     bandwidth="`printf "%'.2f" $bandwidth`"
     echo "Current mining bandwidth to wallet: $bandwidth mbps"
     printf "\n"
