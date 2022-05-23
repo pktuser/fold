@@ -123,8 +123,12 @@ menuSelect() {
 }
 
 showTX() {
+#    more -d -p transactions.log
     
-    more -d -p transactions.log
+#    arrayTX=(`"echo cat transactions.log"`)
+
+    cat  --number transactions.log | more -d -p
+
     read -p "press enter to continue" entr
     menuSelect
 
