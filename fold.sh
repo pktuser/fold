@@ -191,7 +191,7 @@ checkTX() {
 #   stores curl results for grepping
     txRaw=`curl -s $pullTX$txID$suffTX`
 
-    txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
+    txTime=`echo "$txRaw" | grep -w time |  awk '{print $2;}' | tr -d ','`
     echo "txTime: $txTime"
     txTime=`date --date='@$txTime'`
 #    txTime=`echo date -d @$txTime`
@@ -209,7 +209,7 @@ checkTX() {
 #   stores curl results for grepping
     txRaw=`curl -s $pullTX$txID$suffTX`
 
-    txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
+    txTime=`echo "$txRaw" | grep -w time |  awk '{print $2;}' | tr -d ','`
     echo "txTime: $txTime"
     txTime=`$(date -d "@$txTime")`
 #    txTime=`echo date -d @$txTime`
