@@ -211,8 +211,10 @@ checkTX() {
 
     txTime=`echo "$txRaw" | grep -w time |  awk '{print $2;}' | tr -d ','`
     echo "txTime: $txTime"
-    txTime=`$(date -d "@$txTime")`
-#    txTime=`echo date -d @$txTime`
+    txTime=`"$(date -d "@$txTime")"`
+    echo $txTime
+    txTime=`echo date -d @$txTime`
+    echo $txTime
     echo "time of transaction: $txTime"
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
