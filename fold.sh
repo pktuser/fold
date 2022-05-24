@@ -105,7 +105,7 @@ menuSelect() {
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
-    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Exit"
+    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Check Tx" "Exit"
     do
         case $opt in
             "Load Saved Settings" ) loadLog; break;;
@@ -115,6 +115,7 @@ menuSelect() {
             "Show Wallet Status" ) walletStatus; break;;
             "Fold Coins" ) fold; break;;
             "Show Transactions Log" ) showTX; break;;
+            "Check Tx" ) checkTX; break;;
             "Exit" ) exit;;
             * ) echo "try again";;
         esac
@@ -123,13 +124,20 @@ menuSelect() {
 }
 
 showTX() {
-#    more -d -p transactions.log
+#    more -d -p foldtx.og
     
-#    arrayTX=(`"echo cat transactions.log"`)
 
-    cat  --number transactions.log | more -d -p
+    cat  --number foldtx.og | more -d -p
 
-    read -p "press enter to continue" entr
+    read -p "Type line number to check that transaction, leave blank to return to menu." checkLine
+
+    [[ -z $checkLine ]] || [[ "is not a number" ]]
+    # elif $checkLine is a number then use number to pull from array, and run it http://pkt.world/api/tx/ $txid ?hex=no&vin=no&vout=no
+    # change this - AND ALL OTHER REFERENCES - to pkt.world, change to pkt.cash. Currently shows bandwidth and ke/s only for pkt.world, not ALL POOLS. Which is what i want this time.
+    # but this could be solution to benchwidth, query block coinbase info from each pool provider and display that way . . .
+        arrayTX=(`"echo cat foldtx.og"`
+
+
     menuSelect
 
 }
@@ -162,6 +170,8 @@ testWallet() {
 
 sendPKT() {
     #function call to send PKT
+    # store tx id's to sendtx.log
+    # make accessible and able to test 1. qty 2. time sent 3. # confirmations 
     echo "sendPKT()"
 }
 
@@ -173,9 +183,23 @@ addressBook() {
 checkTx() {
     #check latest transactions
     #http://pkt.world/api/tx/f4163ca19d3f2cc01ced3bc36458967160da10da2fd661b1875716e257400c41?hex=no&vin=no&vout=no
-    #prompt user to enter tx id (manual copy paste from transactions.log)
-    #or pull most recent? (query transactions.log as a matrix?)
+    pullTX="http://pkt.world/api/tx/"
+    txID="f4163ca19d3f2cc01ced3bc36458967160da10da2fd661b1875716e257400c41"
+    suffTX="?hex=no&vin=no&vout=no"
+    
+#   stores curl results for grepping
+    txRaw="`curl $pullTX$txID$suffTX`"
+
+
+    txSize="`$txRaw | grep size |  awk '{print $2;}' | tr -d ','`"
+    txSize="`echo "scale=10 ; $txSize / 1073741824" | bc`"
+    echo "Transaction quantity: PKT $txSize"
+    #prompt user to enter tx id (manual copy paste from foldtx.og)
+    #or pull most recent? (query foldtx.og as a matrix?)
     echo "checkTx()"
+    read -p "enter to cont" entr
+    menuSelect
+
 }
 
 walletStatus() {
@@ -199,6 +223,7 @@ walletStatus() {
     hashrate="`printf "%'d" $hashrate`"
     printf "\n"
     echo "Current mining hashrate to wallet.: $hashrate Ke/s"
+    
     #current bandwidth
     bandwidth="`echo "$whotopay" | grep -A 5 "$addr" | grep "kbps" | awk '{print $2}' | tr -d ','`"
     bandwidth="`echo "scale=2 ; $bandwidth / 1000" | bc`"
@@ -281,7 +306,7 @@ fold() {
 
         if [ $utx -gt 1440 ]
         then
-            $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> transactions.log
+            $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> foldtx.og
             x=$(( $x + 1 ))
             echo "Folded $x times"
             sleep 8
@@ -294,7 +319,7 @@ fold() {
     echo "Folding complete, locking wallet . . ."
     $pktctl --wallet walletlock
     echo "Wallet Locked"
-    printf "${GREEN}Transaction hashes saved to transactions.log${CF}\n\n"
+    printf "${GREEN}Transaction hashes saved to foldtx.og${CF}\n\n"
     read -p "Press enter to continue" entr
 
     menuSelect
