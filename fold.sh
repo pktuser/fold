@@ -189,8 +189,11 @@ checkTX() {
     suffTX="?hex=no&vin=no&vout=no"
     
 #   stores curl results for grepping
-    txRaw="`curl -s $pullTX$txID$suffTX`"
+    txRaw=`curl -s $pullTX$txID$suffTX`
     echo $txRaw
+
+    addrValues=`curl -s $pullURL$addr`
+    echo $addrValues
 
     txSize=`echo $txRaw | grep size |  awk '{print $2;}' | tr -d ':,'`
     txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
