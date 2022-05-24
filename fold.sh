@@ -196,7 +196,7 @@ checkTX() {
     echo "Time of transaction: " "$(date -d "@$txTime")"
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
-    echo "confirmations: %'d"$txConf
+    printf "confirmations: ""%'d\n"$txConf
 
     printf "\n\nnow running with new txid\n"
 
@@ -212,7 +212,8 @@ checkTX() {
     echo "Time of transaction: " "$(date -d "@$txTime")"
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
-    printf "confirmations: %'d"$txConf
+    printf "confirmations: "
+    printf "%'d\n"$txConf
 
 #    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ','`
 #    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
