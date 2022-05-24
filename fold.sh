@@ -192,7 +192,8 @@ checkTX() {
     txRaw=`curl -s $pullTX$txID$suffTX`
 
     txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
-    txTime=`date -d "@$txTime"`
+    echo "txTime: $txTime"
+    txTime=`date --date='@$txTime'`
 #    txTime=`echo date -d @$txTime`
     echo $txTime
 
@@ -209,7 +210,8 @@ checkTX() {
     txRaw=`curl -s $pullTX$txID$suffTX`
 
     txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
-    txTime=`date -d "@$txTime"`
+    echo "txTime: $txTime"
+    txTime=`$(date -d "@$txTime")`
 #    txTime=`echo date -d @$txTime`
     echo "time of transaction: $txTime"
 
