@@ -192,10 +192,7 @@ checkTX() {
     txRaw=`curl -s $pullTX$txID$suffTX`
     echo $txRaw
 
-    addrValues=`curl -s $pullURL$addr`
-    echo $addrValues
-
-    txSize=`echo $txRaw | grep size |  awk '{print $2;}' | tr -d ':,'`
+    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ':,'`
 #    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
     echo "Transaction quantity: PKT $txSize"
     #prompt user to enter tx id (manual copy paste from foldtx.log)
