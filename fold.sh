@@ -190,11 +190,35 @@ checkTX() {
     
 #   stores curl results for grepping
     txRaw=`curl -s $pullTX$txID$suffTX`
-#    echo $txRaw
 
-    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ':,'`
-    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
-    echo "Transaction quantity: PKT $txSize"
+    txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
+    echo date -d @$txTime
+#    txTime=`echo date -d @$txTime`
+#    echo $txTime
+
+    txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
+    echo $txConf
+
+    printf "\n\nnow running with new txid\n"
+
+    pullTX="http://pkt.world/api/tx/"
+    txID="890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0"
+    suffTX="?hex=no&vin=no&vout=no"
+    
+#   stores curl results for grepping
+    txRaw=`curl -s $pullTX$txID$suffTX`
+
+    txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
+    echo date -d @$txTime
+#    txTime=`echo date -d @$txTime`
+#    echo $txTime
+
+    txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
+    echo $txConf
+
+#    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ','`
+#    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
+#    echo "Transaction quantity: PKT $txSize"
     #prompt user to enter tx id (manual copy paste from foldtx.log)
     #or pull most recent? (query foldtx.log as a matrix?)
     echo "checkTx()"
