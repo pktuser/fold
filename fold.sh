@@ -235,6 +235,7 @@ walletStatus() {
     wallMinedRaw="`echo "$addrValues" | grep mined24 | awk '{print $2;}' | tr -d ',"'`"
     wallMined24="`echo "scale=2 ; $wallMinedRaw / 1073741824" | bc`"
     echo "PKT mined previous 24 hours...: $wallMined24"
+    ### pull down mined last hour? check minerbench?
 
     #current hashrate
     whotopay=`curl -s http://pool.pkt.world/pay/whotopay`
