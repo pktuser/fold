@@ -181,7 +181,7 @@ showTX() {
 
 }
 
-checkTx() {
+checkTX() {
     #check latest transactions
     #http://pkt.world/api/tx/f4163ca19d3f2cc01ced3bc36458967160da10da2fd661b1875716e257400c41?hex=no&vin=no&vout=no
     pullTX="http://pkt.world/api/tx/"
