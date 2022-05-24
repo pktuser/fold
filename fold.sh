@@ -123,24 +123,6 @@ menuSelect() {
 
 }
 
-showTX() {
-#    more -d -p foldtx.og
-    
-
-    cat  --number foldtx.og | more -d -p
-
-    read -p "Type line number to check that transaction, leave blank to return to menu." checkLine
-
-    [[ -z $checkLine ]] || [[ "is not a number" ]]
-    # elif $checkLine is a number then use number to pull from array, and run it http://pkt.world/api/tx/ $txid ?hex=no&vin=no&vout=no
-    # change this - AND ALL OTHER REFERENCES - to pkt.world, change to pkt.cash. Currently shows bandwidth and ke/s only for pkt.world, not ALL POOLS. Which is what i want this time.
-    # but this could be solution to benchwidth, query block coinbase info from each pool provider and display that way . . .
-        arrayTX=(`"echo cat foldtx.og"`
-
-
-    menuSelect
-
-}
 
 testWallet() {
 
@@ -180,6 +162,25 @@ addressBook() {
     echo "addressBook()"
 }
 
+showTX() {
+#    more -d -p foldtx.log
+    
+
+    cat  --number foldtx.log | more -d -p
+
+    read -p "Type line number to check that transaction, leave blank to return to menu." checkLine
+
+#   [[ -z $checkLine ]] || [[ "is not a number" ]]
+    # elif $checkLine is a number then use number to pull from array, and run it http://pkt.world/api/tx/ $txid ?hex=no&vin=no&vout=no
+    # change this - AND ALL OTHER REFERENCES - to pkt.world, change to pkt.cash. Currently shows bandwidth and ke/s only for pkt.world, not ALL POOLS. Which is what i want this time.
+    # but this could be solution to benchwidth, query block coinbase info from each pool provider and display that way . . .
+        arrayTX=(`"echo cat foldtx.log"`)
+
+
+    menuSelect
+
+}
+
 checkTx() {
     #check latest transactions
     #http://pkt.world/api/tx/f4163ca19d3f2cc01ced3bc36458967160da10da2fd661b1875716e257400c41?hex=no&vin=no&vout=no
@@ -194,8 +195,8 @@ checkTx() {
     txSize="`$txRaw | grep size |  awk '{print $2;}' | tr -d ','`"
     txSize="`echo "scale=10 ; $txSize / 1073741824" | bc`"
     echo "Transaction quantity: PKT $txSize"
-    #prompt user to enter tx id (manual copy paste from foldtx.og)
-    #or pull most recent? (query foldtx.og as a matrix?)
+    #prompt user to enter tx id (manual copy paste from foldtx.log)
+    #or pull most recent? (query foldtx.log as a matrix?)
     echo "checkTx()"
     read -p "enter to cont" entr
     menuSelect
@@ -306,7 +307,7 @@ fold() {
 
         if [ $utx -gt 1440 ]
         then
-            $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> foldtx.og
+            $pktctl --wallet sendfrom $addr 0 [\"$addr\"] >> foldtx.log
             x=$(( $x + 1 ))
             echo "Folded $x times"
             sleep 8
@@ -319,7 +320,7 @@ fold() {
     echo "Folding complete, locking wallet . . ."
     $pktctl --wallet walletlock
     echo "Wallet Locked"
-    printf "${GREEN}Transaction hashes saved to foldtx.og${CF}\n\n"
+    printf "${GREEN}Transaction hashes saved to foldtx.log${CF}\n\n"
     read -p "Press enter to continue" entr
 
     menuSelect
