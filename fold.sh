@@ -212,8 +212,9 @@ checkTX() {
     echo "Time of transaction: " "$(date -d "@$txTime")"
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
+    echo "txConf: $txConf"
     printf "confirmations: "
-    printf "%'d\n"$txConf
+    printf "%'d\n" $txConf
 
 #    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ','`
 #    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
