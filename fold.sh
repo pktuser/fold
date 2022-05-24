@@ -211,7 +211,7 @@ checkTX() {
 
     txTime=`echo "$txRaw" | grep -w time |  awk '{print $2;}' | tr -d ','`
     echo "txTime: $txTime"
-    txTime=`"$(date -d "@$txTime")"`
+    echo "this is an echo" "$(date -d "@$txTime")"
     echo $txTime
     txTime=`echo date -d @$txTime`
     echo $txTime
