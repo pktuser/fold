@@ -192,12 +192,12 @@ checkTX() {
     txRaw=`curl -s $pullTX$txID$suffTX`
 
     txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
-    echo date -d @$txTime
+    txTime=`date -d @$txTime`
 #    txTime=`echo date -d @$txTime`
-#    echo $txTime
+    echo $txTime
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
-    echo $txConf
+    echo "confirmations: $txConf"
 
     printf "\n\nnow running with new txid\n"
 
@@ -209,9 +209,9 @@ checkTX() {
     txRaw=`curl -s $pullTX$txID$suffTX`
 
     txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
-    echo date -d @$txTime
+    txTime=`date -d @$txTime`
 #    txTime=`echo date -d @$txTime`
-#    echo $txTime
+    echo $txTime
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
     echo $txConf
