@@ -193,12 +193,10 @@ checkTX() {
 
     txTime=`echo "$txRaw" | grep -w time |  awk '{print $2;}' | tr -d ','`
     echo "txTime: $txTime"
-    txTime=`date --date='@$txTime'`
-#    txTime=`echo date -d @$txTime`
-    echo $txTime
+    echo "Time of transaction: " "$(date -d "@$txTime")"
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
-    echo "confirmations: $txConf"
+    echo "confirmations: %'d"$txConf
 
     printf "\n\nnow running with new txid\n"
 
@@ -211,14 +209,10 @@ checkTX() {
 
     txTime=`echo "$txRaw" | grep -w time |  awk '{print $2;}' | tr -d ','`
     echo "txTime: $txTime"
-    echo "this is an echo" "$(date -d "@$txTime")"
-    echo $txTime
-    txTime=`echo date -d @$txTime`
-    echo $txTime
-    echo "time of transaction: $txTime"
+    echo "Time of transaction: " "$(date -d "@$txTime")"
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
-    echo "confirmations: $txConf"
+    printf "confirmations: %'d"$txConf
 
 #    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ','`
 #    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
