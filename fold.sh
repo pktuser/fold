@@ -190,10 +190,10 @@ checkTX() {
     
 #   stores curl results for grepping
     txRaw=`curl -s $pullTX$txID$suffTX`
-    echo $txRaw
+#    echo $txRaw
 
     txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ':,'`
-#    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
+    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
     echo "Transaction quantity: PKT $txSize"
     #prompt user to enter tx id (manual copy paste from foldtx.log)
     #or pull most recent? (query foldtx.log as a matrix?)
