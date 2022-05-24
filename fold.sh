@@ -192,7 +192,7 @@ checkTX() {
     txRaw=`curl -s $pullTX$txID$suffTX`
 
     txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
-    txTime=`date -d @$txTime`
+    txTime=`date -d "@$txTime"`
 #    txTime=`echo date -d @$txTime`
     echo $txTime
 
@@ -209,12 +209,12 @@ checkTX() {
     txRaw=`curl -s $pullTX$txID$suffTX`
 
     txTime=`echo "$txRaw" | grep time |  awk '{print $2;}' | tr -d ','`
-    txTime=`date -d @$txTime`
+    txTime=`date -d "@$txTime"`
 #    txTime=`echo date -d @$txTime`
-    echo $txTime
+    echo "time of transaction: $txTime"
 
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
-    echo $txConf
+    echo "confirmations: $txConf"
 
 #    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ','`
 #    txSize=`echo "scale=10 ; $txSize / 1073741824" | bc`
