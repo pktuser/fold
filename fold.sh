@@ -187,14 +187,15 @@ checkTX() {
     #
     # https://explorer.pkt.cash/api/v1/PKT/pkt/tx/890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0
     #
-    # this uses pkt cash explorer which is more neutral. Also has value (Satoshis - divides by 1024/1024/1024), firstSeen, but... not confirmations... :(
+    # this uses pkt cash explorer which is more neutral. 
+    # Also has value (Satoshis - divides by 1024/1024/1024), firstSeen&dateMS (epoch date), but... not confirmations... :(
     #
     ###################################################################################################################
 
     
     
     #check latest transactions
-    #http://pkt.world/api/tx/f4163ca19d3f2cc01ced3bc36458967160da10da2fd661b1875716e257400c41?hex=no&vin=no&vout=no
+    #http://pkt.world/api/tx/890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0?hex=no&vin=no&vout=no
     pullTX="http://pkt.world/api/tx/"
     txID="890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0"
     suffTX="?hex=no&vin=no&vout=no"
@@ -237,7 +238,7 @@ walletStatus() {
     echo "PKT mined previous 24 hours...: $wallMined24"
     ### pull down mined last hour? check minerbench?
 
-    #current hashrate
+    #current hashrate **note: this shows pkt.world hashes only**
     whotopay=`curl -s http://pool.pkt.world/pay/whotopay`
     hashrate="`echo "$whotopay" | grep -A 5 "$addr" | grep "currentEncryptionsPerSecond" | awk '{print $2}' | tr -d ','`"
     hashrate="`echo "$hashrate / 1000" | bc`"
