@@ -189,7 +189,7 @@ checkTX() {
     suffTX="?hex=no&vin=no&vout=no"
     
 #   stores curl results for grepping
-    txRaw="`curl $pullTX$txID$suffTX`"
+    txRaw="`curl -s $pullTX$txID$suffTX`"
 
 
     txSize="`echo $txRaw | grep size |  awk '{print $2;}' | tr -d ','`"
