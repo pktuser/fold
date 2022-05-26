@@ -193,6 +193,8 @@ checkTX() {
     txRaw=`/bin/pktctl --wallet gettransaction $txID | grep -B 27 \]\,`
     echo "txRaw: "$txRaw
 
+    printf "\n\n\n"
+    
     txAmount=`echo $txRaw | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     echo "txAmount: "$txAmount
 
@@ -209,7 +211,7 @@ checkTX() {
 
 
 
-    prompt -p " end of checkTX()" entr
+    read -p " end of checkTX()" entr
 }
 
 checkTX_defunct() {
