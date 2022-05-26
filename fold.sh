@@ -198,12 +198,12 @@ checkTX() {
     txAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     echo "txAmount: "$txAmount
     printf "txAmount: "
-    printf "%'d\n" $txAmount    
+    printf "%'F\n" $txAmount    
 
     printf "\n\n"
 
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
-    txFee="`echo "scale=2 ; $txFee * 1000000" | bc`"
+    txFee=`echo "scale=2 ; ($txFee * 1000000")/1 | bc`
     echo "txFee: "$txFee" μPKT"
 
     printf "\n\n"
