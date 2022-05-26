@@ -198,7 +198,7 @@ checkTX() {
     txAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     echo "txAmount: "$txAmount
     printf "txAmount: "
-    printf "%'d\n"$txAmount    
+    printf "%'d\n" $txAmount    
 
     printf "\n\n"
 
