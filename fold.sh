@@ -183,20 +183,36 @@ showTX() {
 
 }
 
-checkTX_NEW() {
+checkTX() {
     # use pktctl
     #
     # MENU: 1) select from fold history 2) enter manually
     #
+    txID="890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0"
+
+    txRaw=`/bin/pktctl --wallet gettransaction $txID | grep -B 27 \]\,`
+    echo "txRaw: "$txRaw
+
+    txAmount=`echo $txRaw | grep amount -m 1 | awk '{print $2;}' | tr -d ','`
+    echo "txAmount: "$txAmount
+
+    txFee=`echo $txRaw | grep fee -m 1 | awk '{print $2;}' | tr -d ','`
+    txFee=`$(( $txFee / 1000 ))`
+    echo "txFee: "$txFee" mPKT"
+
+    txConf=`echo $txRaw | grep confirmatinos -m 1 | awk '{print $2;}' | tr -d ','`
+    echo "Confirmations: "$txConf
+
+    txTime=`echo $txRaw | grep confirmatinos -m 1 | awk '{print $2;}' | tr -d ','`
+    echo "First seen: "$txTime
 
 
 
 
-
-    echo "checkTX()"
+    prompt -p " end of checkTX()" entr
 }
 
-checkTX() {
+checkTX_defunct() {
     
     ############################################ USE THIS URL !! ######################################################
     #
