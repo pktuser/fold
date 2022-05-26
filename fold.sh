@@ -203,7 +203,7 @@ checkTX() {
     printf "\n\n"
 
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
-    txFee=`echo "scale=2 ; ( $txFee * 1000000" ) / 1 | bc`
+    txFee=`echo "scale=2 ; ( $txFee * 1000000 ) / 1" | bc`
     echo "txFee: "$txFee" μPKT"
 
     printf "\n\n"
