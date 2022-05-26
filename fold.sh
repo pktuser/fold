@@ -198,25 +198,25 @@ checkTX() {
     echo "txID on the chain: "$txchainID
 
     txTime=`echo "$txRaw" | grep time -m1 | awk '{print $2;}' | tr -d ','`
-    echo "First seen......: $(date -d "@$txTime")"
+    echo "First seen.......: $(date -d "@$txTime")"
 
     txRecAddr=`echo "$txRaw" | grep address | awk '{print $2;}' | tr -d ',"'`
-    echo "Received by.....: "$txRecAddr
+    echo "Received by......: "$txRecAddr
 
     txSentAmount=`echo "$txRaw" | grep -B1 send | head -n1 | awk '{print $2;}' | tr -d ','`
-    printf "PKT sent........:"
+    printf "PKT sent.........:"
     printf "%'.12f\n" $txSentAmount
 
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
     txFee=`echo "scale=2 ; ( $txFee * 1000000 ) / 1" | bc`
-    echo "txFee...........: "$txFee" μPKT"
+    echo "txFee............: "$txFee" μPKT"
 
     txRecAmount=`echo "$txRaw" | grep -B1 -w receive  | head -n1 | awk '{print $2;}' | tr -d ','`
-    printf "PKT Received....: "
+    printf "PKT Received.....: "
     printf "%'.12f\n" $txRecAmount
 
     txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
-    printf "Confirmations...: "
+    printf "Confirmations....: "
     printf "%'i\n" $txConf
 
     printf "\n"
