@@ -151,14 +151,16 @@ testWallet() {
 }
 
 sendPKT() {
-    #function call to send PKT
+    # function call to send PKT
+    # https://docs.pkt.cash/en/latest/pktd/pktwallet/#sending-pkt-from-specific-address
     # store tx id's to sendtx.log
     # make accessible and able to test 1. qty 2. time sent 3. # confirmations 
     echo "sendPKT()"
 }
 
 addressBook() {
-    #save sendto addresses to an array or something
+    # save sendto addresses to an array or something
+    # menu: select address, add new address
     echo "addressBook()"
 }
 
@@ -179,6 +181,19 @@ showTX() {
 
     menuSelect
 
+}
+
+checkTX_NEW() {
+    # use pktctl
+    #
+    # MENU: 1) select from fold history 2) enter manually
+    #
+
+
+
+
+
+    echo "checkTX()"
 }
 
 checkTX() {
@@ -274,7 +289,7 @@ walletStatus() {
     if [[ $utx -gt 1439 ]] && [[ $compare -le 30 ]]; then
             txlag="${YELLOW}Folding is recommended.${CF}\n"
         elif [[ $utx -gt 1439 ]] && [[ $compare -gt 29 ]]; then
-            txlag="${RED}Folding recommended but allow wallet height to sync before folding."
+            txlag="${RED}Folding recommended but allow wallet height to sync before folding.${CF}"
         elif [[ $utx -lt 1440 ]]; then
             txlag="${GREEN}Unconsolidated tx's are low - no need to fold!${CF}"
 
