@@ -207,7 +207,7 @@ checkTX() {
 
     txSentAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     printf "PKT sent: "
-    printf "%'e\n" $txSentAmount
+    printf "%'.12f\n" $txSentAmount
 
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
     txFee=`echo "scale=2 ; ( $txFee * 1000000 ) / 1" | bc`
@@ -215,7 +215,7 @@ checkTX() {
 
     txRecAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     printf "PKT sent: "
-    printf "%'e\n" $txRecAmount
+    printf "%'.12f\n" $txRecAmount
 
     txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
     printf "Confirmations: "
