@@ -194,9 +194,8 @@ checkTX() {
     
     printf "\n\n"
 
-    txchainID=`echo "$txRaw" | grep txid | awk '{print $2;}' | tr -d ','`
+    txchainID=`echo "$txRaw" | grep txid | awk '{print $2;}' | tr -d ',"'`
     echo "txID on the chain: "$txchainID
-    printf "\n\n"
 
     txTime=`echo "$txRaw" | grep time -m1 | awk '{print $2;}' | tr -d ','`
     echo "First seen......: $(date -d "@$txTime")"
