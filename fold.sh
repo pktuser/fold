@@ -191,9 +191,8 @@ checkTX() {
     clear
     txID="890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0"
     txRaw=`/bin/pktctl --wallet gettransaction $txID | grep -B 27 \]\,`
-    echo "txRaw: "$txRaw
-
-    #    printf "\n\n\n"
+    
+    printf "\n\n"
 
     txchainID=`echo "$txRaw" | grep txid | awk '{print $2;}' | tr -d ','`
     echo "txID on the chain: "$txchainID
@@ -206,7 +205,7 @@ checkTX() {
     echo "Received by.....: "$txRecAddr
 
     txSentAmount=`echo "$txRaw" | grep -B1 send | head -n1 | awk '{print $2;}' | tr -d ','`
-    printf "PKT sent.......: "
+    printf "PKT sent........:"
     printf "%'.12f\n" $txSentAmount
 
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
