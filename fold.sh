@@ -205,7 +205,7 @@ checkTX() {
     txRecAddr=`echo "$txRaw" | grep address | awk '{print $2;}' | tr -d ','`
     echo "Received by: "$txRecAddr
 
-    txSentAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
+    txSentAmount=`echo "$txRaw" | grep amount -m2 | awk '{print $2;}' | tr -d ','`
     printf "PKT sent: "
     printf "%'.12f\n" $txSentAmount
 
@@ -213,8 +213,8 @@ checkTX() {
     txFee=`echo "scale=2 ; ( $txFee * 1000000 ) / 1" | bc`
     echo "txFee: "$txFee" μPKT"
 
-    txRecAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
-    printf "PKT sent: "
+    txRecAmount=`echo "$txRaw" | grep amount -m3 | awk '{print $2;}' | tr -d ','`
+    printf "PKT Received: "
     printf "%'.12f\n" $txRecAmount
 
     txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
