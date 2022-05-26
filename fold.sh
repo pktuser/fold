@@ -200,20 +200,26 @@ checkTX() {
     printf "txAmount: "
     printf "%'f\n"$txAmount    
 
+    printf "\n\n"
+
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
-    txFee=`echo "scale=2 ; $txFee * 1000 * 1000" | bc`
+    txFee=`echo "scale=2 ; $txFee * 1000000" | bc`
     echo "txFee: "$txFee" μPKT"
+
+    printf "\n\n"
 
     txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
     echo "Confirmations: "$txConf
-    printf "confirmations: "
-    printf "%'d\n"$txConf
+    printf "Confirmations: "
+    printf "%'d\n" $txConf
 
+    printf "\n\n"
+    
     txTime=`echo "$txRaw" | grep time -m1 | awk '{print $2;}' | tr -d ','`
     echo "First seen: $(date -d "@$txTime")"
 
 
-
+    #     wallBal=(`printf "%'.2f\n" ${wallBal[@]}`)
 
     read -p " end of checkTX()" entr
 }
@@ -246,7 +252,7 @@ checkTX_defunct() {
 
 #   display # confirmations
     txConf=`echo "$txRaw" | grep confirmations |  awk '{print $2;}' | tr -d ','`
-    printf "confirmations: "
+    printf "Confirmations: "
     printf "%'d\n" $txConf
 
 #    txSize=`echo "$txRaw" | grep size |  awk '{print $2;}' | tr -d ','`
