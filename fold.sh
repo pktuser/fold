@@ -185,38 +185,44 @@ showTX() {
 
 checkTX() {
     # use pktctl
-    #
+    #/bin/pktctl --wallet gettransaction 890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0 | grep -B 27 \]\,
     # MENU: 1) select from fold history 2) enter manually
     #
+    clear
     txID="890a63ce166a80b79fc5a1ba4d78a835328c48c5341684b7a371793658082ac0"
-
     txRaw=`/bin/pktctl --wallet gettransaction $txID | grep -B 27 \]\,`
     echo "txRaw: "$txRaw
 
-    printf "\n\n\n"
+    #    printf "\n\n\n"
+
+    txchainID=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
+    echo "txID on the chain: "$txchainID
 
     txAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
-    echo "txAmount: "$txAmount
     printf "txAmount: "
-    printf "%'F\n" $txAmount    
+    printf "%'f\n" $txAmount    
 
-    printf "\n\n"
+    printf "\n"
 
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
     txFee=`echo "scale=2 ; ( $txFee * 1000000 ) / 1" | bc`
     echo "txFee: "$txFee" μPKT"
 
-    printf "\n\n"
+    printf "\n"
 
     txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
     printf "Confirmations: "
     printf "%'i\n" $txConf
 
-    printf "\n\n"
+    printf "\n"
 
     txTime=`echo "$txRaw" | grep time -m1 | awk '{print $2;}' | tr -d ','`
     echo "First seen: $(date -d "@$txTime")"
 
+    printf "\n"
+
+    txRecAddr=`echo "$txRaw" | grep address | awk '{print $2;}' | tr -d ','`
+    echo "Received by: "$txRecAddr
 
     #     wallBal=(`printf "%'.2f\n" ${wallBal[@]}`)
 
