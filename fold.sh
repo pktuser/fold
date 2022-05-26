@@ -194,18 +194,18 @@ checkTX() {
     echo "txRaw: "$txRaw
 
     printf "\n\n\n"
-    
-    txAmount=`echo $txRaw | grep amount -m1 | awk '{print $2;}' | tr -d ','`
+
+    txAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     echo "txAmount: "$txAmount
 
-    txFee=`echo $txRaw | grep fee -m1 | awk '{print $2;}' | tr -d ','`
+    txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
     txFee=`echo "scale=4 ; $txFee / 1000" | bc`
     echo "txFee: "$txFee" mPKT"
 
-    txConf=`echo $txRaw | grep confirmations | awk '{print $2;}' | tr -d ','`
+    txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
     echo "Confirmations: "$txConf
 
-    txTime=`echo $txRaw | grep time -m1 | awk '{print $2;}' | tr -d ','`
+    txTime=`echo "$txRaw" | grep time -m1 | awk '{print $2;}' | tr -d ','`
     echo "First seen: "$txTime
 
 
