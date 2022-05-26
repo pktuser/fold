@@ -197,6 +197,7 @@ checkTX() {
 
     txchainID=`echo "$txRaw" | grep txid | awk '{print $2;}' | tr -d ','`
     echo "txID on the chain: "$txchainID
+    printf "\n\n"
 
     txTime=`echo "$txRaw" | grep time -m1 | awk '{print $2;}' | tr -d ','`
     echo "First seen: $(date -d "@$txTime")"
@@ -206,7 +207,7 @@ checkTX() {
 
     txSentAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     printf "PKT sent: "
-    printf "%'f\n" $txSentAmount
+    printf "%'e\n" $txSentAmount
 
     txFee=`echo "$txRaw" | grep fee -m1 | awk '{print $2;}' | tr -d ','`
     txFee=`echo "scale=2 ; ( $txFee * 1000000 ) / 1" | bc`
@@ -214,7 +215,7 @@ checkTX() {
 
     txRecAmount=`echo "$txRaw" | grep amount -m1 | awk '{print $2;}' | tr -d ','`
     printf "PKT sent: "
-    printf "%'f\n" $txRecAmount
+    printf "%'e\n" $txRecAmount
 
     txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
     printf "Confirmations: "
