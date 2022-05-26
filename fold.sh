@@ -213,7 +213,7 @@ checkTX() {
     txFee=`echo "scale=2 ; ( $txFee * 1000000 ) / 1" | bc`
     echo "txFee: "$txFee" μPKT"
 
-    txRecAmount=`echo "$txRaw" | grep -B1 recieve  | awk '{print $2;}' | tr -d ','`
+    txRecAmount=`echo "$txRaw" | grep -B1 receive  | awk '{print $2;}' | tr -d ','`
     printf "PKT Received: "
     printf "%'.12f\n" $txRecAmount
 
