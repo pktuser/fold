@@ -106,7 +106,7 @@ menuSelect() {
     COLUMNS=0
     echo "What would you like to do?"
 #    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Check Tx" "Send Tip to Developer" "Exit"
-    select opt in "Edit Settings" "Show Wallet Status" "Send / Receive PKT" "Show Transactions Log" "Check Tx History" "Fold Coins" "Send Tip to Developer" "Exit"
+    select opt in "Edit Settings" "Show Wallet Status" "Send / Receive PKT" "Show Transactions Log" "Check Tx History" "Fold Coins" "Exit"
     do
         case $opt in
 #            "Load Saved Settings" ) loadLog; break;;
@@ -117,7 +117,7 @@ menuSelect() {
             "Show Wallet Status" ) walletStatus; break;;
             "Send / Receive PKT" ) sendPKT; break;;
             "Show Transactions Log" ) showTX; break;;
-            "Check Tx" ) checkTX; break;;
+            "Check Tx History" ) checkTX; break;;
             "Fold Coins" ) fold; break;;
             "Exit" ) exit;;
             * ) echo "try again";;
