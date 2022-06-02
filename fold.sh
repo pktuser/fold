@@ -105,7 +105,7 @@ menuSelect() {
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
-    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Check Tx" "Exit"
+    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Check Tx" "Send Tip to Developer" "Exit"
     do
         case $opt in
             "Load Saved Settings" ) loadLog; break;;
@@ -147,6 +147,16 @@ testWallet() {
             printf "\n${RED}your wallet is not synced. Please sync by running /pktwallet\n"
             menuSelect
     fi
+
+}
+
+sendTip() {
+    # big happy PKT in ascii art
+    # enter amount to send
+    # thank you every PKT helps!
+    # find some way to notify me ? eg discord ping? 
+
+    echo "sendTip()"
 
 }
 
@@ -200,9 +210,6 @@ checkTX() {
     txTime=`echo "$txRaw" | grep time -m1 | awk '{print $2;}' | tr -d ','`
     echo "First seen.......: $(date -d "@$txTime")"
 
-    txRecAddr=`echo "$txRaw" | grep address | awk '{print $2;}' | tr -d ',"'`
-    echo "Received by......: "$txRecAddr
-
     txSentAmount=`echo "$txRaw" | grep -B1 send | head -n1 | awk '{print $2;}' | tr -d ','`
     printf "PKT sent.........:"
     printf "%'.12f\n" $txSentAmount
@@ -214,6 +221,9 @@ checkTX() {
     txRecAmount=`echo "$txRaw" | grep -B1 -w receive  | head -n1 | awk '{print $2;}' | tr -d ','`
     printf "PKT Received.....: "
     printf "%'.12f\n" $txRecAmount
+
+    txRecAddr=`echo "$txRaw" | grep address | awk '{print $2;}' | tr -d ',"'`
+    echo "Received by......: "$txRecAddr
 
     txConf=`echo "$txRaw" | grep confirmations | awk '{print $2;}' | tr -d ','`
     printf "Confirmations....: "
