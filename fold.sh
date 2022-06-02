@@ -105,17 +105,20 @@ menuSelect() {
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
-    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Check Tx" "Send Tip to Developer" "Exit"
+#    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Show Wallet Status" "Fold Coins" "Show Transactions Log" "Check Tx" "Send Tip to Developer" "Exit"
+    select opt in "Edit Settings" "Show Wallet Status" "Send / Receive PKT" "Show Transactions Log" "Check Tx History" "Fold Coins" "Send Tip to Developer" "Exit"
     do
         case $opt in
-            "Load Saved Settings" ) loadLog; break;;
-            "Enter New Settings" ) promptUser; break;;
-            "Display Saved Settings" ) displayLog; break;;
-            "Delete Saved Settings" ) deleteLog; break;;
+#            "Load Saved Settings" ) loadLog; break;;
+#            "Enter New Settings" ) promptUser; break;;
+#            "Display Saved Settings" ) displayLog; break;;
+#            "Delete Saved Settings" ) deleteLog; break;;
+            "Edit Settings" ) settings; break;;
             "Show Wallet Status" ) walletStatus; break;;
-            "Fold Coins" ) fold; break;;
+            "Send / Receive PKT" ) sendPKT; break;;
             "Show Transactions Log" ) showTX; break;;
             "Check Tx" ) checkTX; break;;
+            "Fold Coins" ) fold; break;;
             "Exit" ) exit;;
             * ) echo "try again";;
         esac
@@ -123,6 +126,11 @@ menuSelect() {
 
 }
 
+settings() {
+    echo "settings()"
+    read -p "enter to continue" entr
+    menuSelect
+}
 
 testWallet() {
 
