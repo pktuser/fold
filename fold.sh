@@ -128,9 +128,23 @@ menuSelect() {
 }
 
 settings() {
-    echo "settings()"
-    read -p "enter to continue" entr
-    menuSelect
+
+    clear
+    PS3="Select: "
+    COLUMNS=0
+    echo "What would you like to do?"
+    select opt in "Load Saved Settings" "Enter New Settings" "Display Saved Settings" "Delete Saved Settings" "Return to Main Menu"
+    do
+        case $opt in
+            "Load Saved Settings" ) loadLog; break;;
+            "Enter New Settings" ) promptUser; break;;
+            "Display Saved Settings" ) displayLog; break;;
+            "Delete Saved Settings" ) deleteLog; break;;
+            "Return to Main Menu" ) menuSelect; break;;
+            * ) echo "try again";;
+        esac
+    done
+
 }
 
 testWallet() {
@@ -181,6 +195,23 @@ addressBook() {
     # save sendto addresses to an array or something
     # menu: select address, add new address
     echo "addressBook()"
+
+    clear
+    PS3="Select: "
+    COLUMNS=0
+    echo "What would you like to do?"
+    select opt in "View Saved Addresses" "Add New Address" "Delete Address" "Add Nickname to Address" "Return to Main Menu"
+    do
+        case $opt in
+            "View Saved Addresses" ) loadLog; break;;
+            "Add New Address" ) promptUser; break;;
+            "Delete Address" ) displayLog; break;;
+            "Add Nickname to Address" ) deleteLog; break;;
+            "Return to Main Menu" ) menuSelect; break;;
+            * ) echo "try again";;
+        esac
+    done
+
 }
 
 showTX() {
