@@ -108,7 +108,7 @@ promptUser() {
 menuSelect() {
     
     clear
-    ${RED}${UNDERLINE}/n/n         version 0.110922.1104          ${CF}
+    printf ${RED}${UNDERLINE}/n/n         version 0.110922.1104          ${CF}
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
