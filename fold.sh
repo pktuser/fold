@@ -40,7 +40,7 @@ loadLog() { # load log to variable
     pass="${log[2]}"
 
     clear
-    printf "\n${GREEN}Settings successfully loaded${CF}"
+    printf "\n\n${GREEN}Settings successfully loaded${CF}"
     sleep 1
 
     menuSelect
@@ -108,7 +108,7 @@ promptUser() {
 menuSelect() {
     
     clear
-    printf ${RED}${UNDERLINE}/n/n         version 0.110922.1104          ${CF}
+    printf "${RED}${UNDERLINE}\n\n         version 0.110922.1104          ${CF}"
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
