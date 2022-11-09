@@ -25,7 +25,8 @@ pktctl="/bin/pktctl"
 testLog() {
 
     clear
-    ${RED}${UNDERLINE}version 0.110922.1024${CF}
+    ${RED}${UNDERLINE}/n/n         version 0.110922.1104          ${CF}
+    sleep 1
 
     log=fold.log
     if [ -f "$log" ]
