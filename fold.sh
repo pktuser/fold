@@ -107,7 +107,7 @@ promptUser() {
 menuSelect() {
     
     clear
-    printf "${GREY}${UNDERLINE}    version 0.1109.1136    ${CF}\n\n"
+    printf "${GREY}${UNDERLINE}    version 0.1109.1209    ${CF}\n\n"
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
