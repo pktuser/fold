@@ -108,8 +108,12 @@ promptUser() {
 menuSelect() {
     
     clear
+<<<<<<< Updated upstream
 
     printf "${GREY}${UNDERLINE}    version 0.1109.1124    ${CF}\n\n"
+=======
+    printf "${RED}${UNDERLINE}\n\n         version 0.110922.1104          ${CF}\n"
+>>>>>>> Stashed changes
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
