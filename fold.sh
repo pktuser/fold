@@ -102,6 +102,7 @@ promptUser() {
 menuSelect() {
     
     clear
+    printf "${GREY}${UNDERLINE}    version 0.1109.1124    ${CF}\n\n"
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
@@ -453,7 +454,7 @@ fold() {
 # function calls
 clear
 printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${CF}\n\n"
-read -p "press enter to confirm, ctrl-c to exit" entr
+#read -p "press enter to confirm, ctrl-c to exit" entr
 clear
 testLog
 
