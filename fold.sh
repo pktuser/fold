@@ -256,7 +256,7 @@ fold() {
 # function calls
 clear
 printf "\n\n\n${RED}pktwallet must be running in background for pktctl to work${CF}\n\n"
-timeout 1
+timeout 10
 #read -p "press enter to confirm, ctrl-c to exit" entr
 clear
 testLog
