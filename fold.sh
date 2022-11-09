@@ -24,10 +24,6 @@ pktctl="/bin/pktctl"
 
 testLog() {
 
-    clear
-    ${RED}${UNDERLINE}/n/n         version 0.110922.1104          ${CF}
-    sleep 1
-
     log=fold.log
     if [ -f "$log" ]
         then loadLog
@@ -112,6 +108,7 @@ promptUser() {
 menuSelect() {
     
     clear
+    ${RED}${UNDERLINE}/n/n         version 0.110922.1104          ${CF}
     PS3="Select: "
     COLUMNS=0
     echo "What would you like to do?"
