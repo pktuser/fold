@@ -3,7 +3,7 @@ Folds coins in your address. Allows you to check status - current block height, 
 Checks the number of unconsolidated txns and folds for you.
 
 
-current version v.01109.1209 [^1]
+current version v0.1109.1209 [^1]
 
 install from comand line:
 `git clone https://github.com/pktuser/fold`
@@ -18,3 +18,4 @@ Feedback always welcome, @pktuser7373 on discord
 
 
 [^1]: next version will check if pktwallet is running, and run it in background if not. (05/15/22)
+[^1]: actually next version will allow you to send payments (11/09/22)
